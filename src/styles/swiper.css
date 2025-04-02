@@ -1,0 +1,27 @@
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+/* @import "swiper/css/scrollbar"; */
+
+.swiper-pagination-bullet {
+    width: 18px;
+    height: 18px;
+    background-color: rgb(255, 255, 255);
+    opacity: 1 !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: rgb(255, 0, 0);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    font-size: 50px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 4px black;
+    --swiper-navigation-sides-offset: 10%
+}
