@@ -69,7 +69,7 @@ export const useAddToCart = () => {
         mutate: addToCart
     } = useMutation({
         mutationFn: addToCartRequest,
-        onSuccess: async (data) => {
+        onSuccess: async () => {
             alert("加入購物車成功！")
             window.location.reload()
         }
@@ -157,7 +157,7 @@ export const useDeleteCartItem = () => {
         mutate: deleteCartItem
     } = useMutation({
         mutationFn: deleteCartItemRequest,
-        onSuccess: async (data) => {
+        onSuccess: async () => {
             alert("加入購物車成功！")
             window.location.reload()
 

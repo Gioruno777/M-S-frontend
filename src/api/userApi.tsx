@@ -1,5 +1,5 @@
 import { UpdatePasswordFormData } from "@/form/userforms/UpdatePasswordForm";
-import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
