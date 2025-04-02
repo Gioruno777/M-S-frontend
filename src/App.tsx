@@ -18,23 +18,25 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout ><HomePage /></Layout>} />
 
-      <Route path="/menu">
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+      </Route>
 
-        <Route path="main" element={<Layout ><BurgerPage /></Layout>} />
-        <Route path="main/:foodId" element={<Layout ><FoodDetailPage /></Layout>} />
-        <Route path="main/search" element={<Layout ><SearchBurgerPage /></Layout>} />
+      <Route path="/menu" element={<Layout />}>
+        <Route path="main" element={<BurgerPage />} />
+        <Route path="main/:foodId" element={<FoodDetailPage />} />
+        <Route path="main/search" element={<SearchBurgerPage />} />
 
-        <Route path="side" element={<Layout ><SideDishPage /></Layout>} />
-        <Route path="side/:foodId" element={<Layout ><FoodDetailPage /></Layout>} />
-        <Route path="side/search" element={<Layout ><SearchSidePage /></Layout>} />
+        <Route path="side" element={<SideDishPage />} />
+        <Route path="side/:foodId" element={<FoodDetailPage />} />
+        <Route path="side/search" element={<SearchSidePage />} />
 
-        <Route path="beverage" element={<Layout ><BeveragePage /></Layout>} />
-        <Route path="beverage/:foodId" element={<Layout ><FoodDetailPage /></Layout>} />
-        <Route path="beverage/search" element={<Layout ><SearchBeveragePage /></Layout>} />
+        <Route path="beverage" element={<BeveragePage />} />
+        <Route path="beverage/:foodId" element={<FoodDetailPage />} />
+        <Route path="beverage/search" element={<SearchBeveragePage />} />
 
-        <Route path="nutritionfacts" element={<Layout ><NutritionFactsPage /></Layout>} />
+        <Route path="nutritionfacts" element={<NutritionFactsPage />} />
 
       </Route>
 
