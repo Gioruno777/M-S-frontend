@@ -28,7 +28,7 @@ export const useGetAllFood = (sortBy: string, category: string) => {
 }
 
 export const useGetFoodDetail = (id?: string) => {
-    const requset = async () => {
+    const request = async () => {
         const response = await fetch(`${API_BASE_URL}/api/menu/${id}`, {
             method: "GET"
         })
@@ -45,7 +45,7 @@ export const useGetFoodDetail = (id?: string) => {
         isError,
     } = useQuery({
         queryKey: ["getFoodDetail", id],
-        queryFn: requset,
+        queryFn: request,
         enabled: !!id
     })
 
@@ -57,7 +57,7 @@ export const useGetFoodDetail = (id?: string) => {
 
 export const useSearchFood = (sortBy: string, category: string, keyword: string,) => {
 
-    const requset = async () => {
+    const request = async () => {
         const response = await fetch(`${API_BASE_URL}/api/menu/search?keyword=${keyword}&sort=${sortBy}&category=${category}`, {
             method: "GET"
         })
@@ -74,7 +74,7 @@ export const useSearchFood = (sortBy: string, category: string, keyword: string,
         isError
     } = useQuery({
         queryKey: ["fetchSearchFoodResult", sortBy, keyword],
-        queryFn: requset
+        queryFn: request
     })
     const items = data?.data?.items ?? []
 

@@ -32,7 +32,9 @@ const AddToCartForm = ({ productID }: Props) => {
 
     return (
         <Form{...form}>
-            <form onSubmit={form.handleSubmit(handleAddotoCart)}>
+            <form
+                onSubmit={form.handleSubmit(handleAddotoCart)}
+            >
                 <FormField
                     name="quantity"
                     control={form.control}
@@ -87,7 +89,7 @@ const AddToCartForm = ({ productID }: Props) => {
                     </button>
                 )}
             </form>
-        </Form>
+        </Form >
 
     )
 }

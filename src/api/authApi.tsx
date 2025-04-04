@@ -6,60 +6,33 @@ import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useCheckEmail = (email: string) => {
-
-    const checkEmailRequset = async () => {
-        if (!email) return null
-        const response = await fetch(`${API_BASE_URL}/api/auth/checkemail/${email}`, {
-            method: "GET"
-        })
-        if (!response.ok) {
-            throw new Error("Something Error");
-        }
-        const result = await response.json();
-        return result.exists ?? null;
-    }
-    const {
-        data,
-        isLoading,
-        refetch
-    } = useQuery({
-        queryKey: ["checkEmail"],
-        queryFn: checkEmailRequset,
-        enabled: false,
-        retry: false,
-    })
-    return { exists: data ?? null, isLoading, refetch }
-}
-
-
 export const useSignUp = () => {
     const navigate = useNavigate()
 
-    const signUpRequset = async (data: SignUpFormData) => {
+    const request = async (formData: SignUpFormData) => {
         const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+            body: JSON.stringify(formData),
         })
-        const body = await response.json()
+        const data = await response.json()
 
         if (!response.ok) {
-            throw new Error("註冊失敗")
+            throw new Error(data.message || "註冊失敗")
         }
-        return body
+        return data
     }
-    const mutation = useMutation({
-        mutationFn: signUpRequset,
-        onSuccess: async (data) => {
+    const {
+        mutate: signUp,
+        isPending,
+    } = useMutation({
+        mutationFn: request,
+        onSuccess: async () => {
+            alert("註冊成功")
             navigate("/auth/login", { replace: true })
-            console.log("成功登入:", data)
-        },
-        onError: (error: Error) => {
-            console.log("QQ", error)
         }
     })
-    return mutation
+    return { signUp, isPending }
 }
 
 
@@ -72,41 +45,42 @@ export const useLogin = () => {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
 
-    const loginRequset = async (data: loginType) => {
+    const request = async (formData: loginType) => {
         const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+            body: JSON.stringify(formData),
         })
 
-        const body = await response.json()
+        const data = await response.json()
 
         if (!response.ok) {
-            throw new Error("登入失敗，請檢查帳號或密碼")
+            throw new Error(data.message || "登入失敗，請檢查帳號或密碼")
         }
 
-        return body
+        return data
     }
 
-    const mutation = useMutation({
-        mutationFn: loginRequset,
-        onSuccess: async (data) => {
+    const {
+        mutate: login,
+        isPending,
+        isError,
+        error
+    } = useMutation({
+        mutationFn: request,
+        onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ["validateToken"] })
             navigate("/member/main", { replace: true })
-            console.log("成功登入:", data)
-        },
-        onError: (error: Error) => {
-            console.log("QQ", error)
-        },
+        }
     })
 
-    return mutation
+    return { login, isPending, isError, error }
 }
 
 export const useValidateToken = () => {
 
-    const getTokenRequset = async () => {
+    const request = async () => {
         const response = await fetch(`${API_BASE_URL}/api/auth/validatetoken`, {
             method: "GET",
             credentials: "include"
@@ -120,7 +94,7 @@ export const useValidateToken = () => {
 
     const { isError, isLoading } = useQuery({
         queryKey: ["validateToken"],
-        queryFn: getTokenRequset,
+        queryFn: request,
         retry: false,
     })
 
@@ -143,99 +117,103 @@ export const UseLogout = () => {
         return response.json()
     }
 
-    const mutation = useMutation({
-        mutationFn: logoutResponse,
-        onSuccess: async (data) => {
-            await queryClient.invalidateQueries({ queryKey: ["validateToken"] })
-            navigate("/", { replace: true })
-            console.log("成功登出:", data)
-        },
-        onError: (error: Error) => {
-            console.log("QQ", error)
-        }
-    })
-    return mutation
+    const {
+        mutate: logout
+    }
+        = useMutation({
+            mutationFn: logoutResponse,
+            onSuccess: async () => {
+                await queryClient.invalidateQueries({ queryKey: ["validateToken"] })
+                navigate("/", { replace: true })
+            },
+            onError: () => {
+                alert("登出失敗😅")
+            }
+        })
+    return { logout }
 }
 
 export const useForgotPassword = () => {
     const navigate = useNavigate()
-
-    const forgotPasswordRequset = async (data: ForgotPasswordFormData) => {
+    const request = async (formData: ForgotPasswordFormData) => {
         const response = await fetch(`${API_BASE_URL}/api/auth/forgotpassword`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+            body: JSON.stringify(formData),
         })
-        const body = await response.json()
+        const data = await response.json()
 
         if (!response.ok) {
-            throw new Error("註冊失敗")
+            throw new Error("伺服器錯誤")
         }
-        return body
+        return data
     }
-    const mutation = useMutation({
-        mutationFn: forgotPasswordRequset,
-        onSuccess: async (data) => {
+    const {
+        mutate: sendResettoken,
+        isPending
+    } = useMutation({
+        mutationFn: request,
+        onSuccess: () => {
+            alert("請至信箱收取重設密碼連結！")
             navigate("/", { replace: true })
-            console.log("成功登入:", data)
-        },
-        onError: (error: Error) => {
-            console.log("QQ", error)
         }
     })
-    return mutation
+    return { sendResettoken, isPending }
 }
 
 export const useCheckResetToken = (resetToken: string) => {
 
-    const checkResetTokenRequset = async () => {
+    const request = async () => {
         if (!resetToken) return null
-        const response = await fetch(`${API_BASE_URL}/api/auth//resetpassword/${resetToken}`, {
+        const response = await fetch(`${API_BASE_URL}/api/auth/resetpassword/${resetToken}`, {
             method: "GET"
         })
         if (!response.ok) {
-            throw new Error("Something Error");
+            throw new Error("請求逾時");
         }
         const result = await response.json();
         return result
     }
     const {
-        data,
         isError,
         isLoading
     } = useQuery({
         queryKey: ["checkResetToken"],
-        queryFn: checkResetTokenRequset,
+        queryFn: request
     })
-    return { data, isError, isLoading }
+    return { isError, isLoading }
 }
 
 export const useResetPassword = (resetToken: string) => {
     const navigate = useNavigate()
 
-    const resetPasswordRequset = async (data: ResetPasswordFormData) => {
+    const request = async (formData: ResetPasswordFormData) => {
         const response = await fetch(`${API_BASE_URL}/api/auth/resetpassword/${resetToken}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+            body: JSON.stringify(formData),
         })
-        const body = await response.json()
+        const data = await response.json()
 
         if (!response.ok) {
-            throw new Error("更改失敗")
+            throw new Error("請求逾時")
         }
-        console.log(body)
-        return body
+
+        return data
     }
-    const mutation = useMutation({
-        mutationFn: resetPasswordRequset,
-        onSuccess: async (data) => {
+    const {
+        mutate: resetPassword,
+        isPending
+    } = useMutation({
+        mutationFn: request,
+        onSuccess: () => {
+            alert("重設成功")
             navigate("/", { replace: true })
-            console.log("成功更改密碼:", data)
         },
-        onError: (error: Error) => {
-            console.log("QQ", error)
+        onError: () => {
+            alert("請求逾時")
+            navigate("/", { replace: true })
         }
     })
-    return mutation
+    return { resetPassword, isPending }
 }

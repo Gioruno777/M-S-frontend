@@ -1,32 +1,31 @@
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Link } from 'react-router-dom'
 import { Checkbox } from '@/components/ui/checkbox'
-import { useCheckEmail, useSignUp } from '@/api/authApi'
-import { useState } from 'react'
+import { useSignUp } from '@/api/authApi'
+import RedButton from '@/components/RedButton'
 
 
 const formSchema = z.object(
     {
         email: z.string().email({ message: "請輸入有效的 Email" }),
         password: z.string().min(1, { message: "請輸入密碼" }),
-        passwordConfirmed: z.string().min(1, { message: "請再輸入密碼" }),
+        confirmPassword: z.string().min(1, { message: "請輸入確認密碼" }),
         userName: z.string().min(1, { message: "請輸入使用者名稱" }),
         agreeToTerms: z.boolean()
     })
-    .refine((data) => data.password === data.passwordConfirmed,
+    .refine((data) => data.password === data.confirmPassword,
         {
             message: "密碼不一致",
-            path: ["passwordConfirmed"],
+            path: ["confirmPassword"],
         })
     .refine((data) => data.agreeToTerms === true, {
         message: "請閱讀並同意條款",
         path: ["agreeToTerms"],
-    });
+    })
 
 export type SignUpFormData = z.infer<typeof formSchema>
 
@@ -37,66 +36,52 @@ const SignUpForm = () => {
         defaultValues: {
             email: "",
             password: "",
-            passwordConfirmed: "",
+            confirmPassword: "",
             userName: "",
             agreeToTerms: false
         },
     })
 
-    const email = form.watch("email")
-    const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    const { signUp, isPending } = useSignUp()
 
-    const { exists, isLoading, refetch } = useCheckEmail(email)
-    const [showChecked, setShowChecked] = useState(false)
-
-
-    const signUpMutation = useSignUp()
-
-    const handelSignUP = async (values: SignUpFormData) => {
-        const isValid = await form.trigger("agreeToTerms")
+    const handleSignUP = async (formData: SignUpFormData) => {
+        const isValid = await form.trigger()
         if (!isValid) return
-        signUpMutation.mutate(values)
+        signUp(formData, {
+            onError: (err) => {
+                form.setError("root", {
+                    type: "manual",
+                    message: err.message,
+                })
+            }
+        })
     }
 
-    console.log(email, exists, isLoading)
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handelSignUP)}>
-
+            <form
+                onSubmit={form.handleSubmit(handleSignUP)}
+                className="space-y-4 ounded-lg md:p-5"
+            >
                 <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>電子郵件地址</FormLabel>
+                            <div>電子郵件地址</div>
                             <FormControl>
                                 <Input
                                     placeholder="請輸入電子郵件地址"
                                     {...field}
-
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                        setShowChecked(false)
-                                    }}
-
-                                    onBlur={() => {
-                                        if (isValidEmail(email)) {
-                                            refetch()
-                                            setShowChecked(true)
-                                        }
-
-                                    }}
                                 />
                             </FormControl>
-                            {!isLoading && showChecked && (
-                                exists === true ? (
-                                    <p className="text-red-500">此 email 已註冊</p>
-                                ) : exists === false ? (
-                                    <p className="text-green-500">此 email 可以使用</p>
-                                ) : null
+                            {form.formState.errors.root && (
+                                <p className="min-h-5 text-red-500 text-sm">
+                                    {form.formState.errors.root.message}
+                                </p>
                             )}
-                            <FormMessage />
+                            <FormMessage className='min-h-5 text-red-500' />
                         </FormItem>
                     )}
                 />
@@ -106,7 +91,7 @@ const SignUpForm = () => {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>密碼</FormLabel>
+                            <div>密碼</div>
                             <FormControl>
                                 <Input
                                     type='password'
@@ -114,27 +99,27 @@ const SignUpForm = () => {
                                     {...field}
                                     onChange={(e) => {
                                         field.onChange(e)
-                                        if (form.formState.touchedFields.passwordConfirmed) {
-                                            form.trigger("passwordConfirmed")
+                                        if (form.formState.touchedFields.confirmPassword) {
+                                            form.trigger("confirmPassword")
                                         }
                                     }}
                                 />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='min-h-5 text-red-500' />
                         </FormItem>
                     )}
                 />
 
                 <FormField
                     control={form.control}
-                    name="passwordConfirmed"
+                    name="confirmPassword"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>確認密碼</FormLabel>
+                            <div>確認密碼</div>
                             <FormControl>
-                                <Input type='password' placeholder="請輸入密碼" {...field} />
+                                <Input type='password' placeholder="請輸入確認密碼" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='min-h-5 text-red-500' />
                         </FormItem>
                     )}
                 />
@@ -144,11 +129,11 @@ const SignUpForm = () => {
                     name="userName"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>使用者名稱</FormLabel>
+                            <div>使用者名稱</div>
                             <FormControl>
-                                <Input placeholder="請填寫使用者名稱" {...field} />
+                                <Input placeholder="請輸入使用者名稱" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='min-h-5 text-red-500' />
                         </FormItem>
                     )}
                 />
@@ -157,28 +142,33 @@ const SignUpForm = () => {
                     control={form.control}
                     name="agreeToTerms"
                     render={({ field }) => (
-                        <FormItem className="flex items-center space-x-2">
-                            <FormControl>
-                                <Checkbox
-                                    id="terms"
-                                    checked={field.value}
-                                    onCheckedChange={(checked) => field.onChange(checked)}
-                                />
+                        <FormItem >
+                            <div className='flex flex items-center space-x-3'>
+                                <FormControl>
+                                    <Checkbox
+                                        id="terms"
+                                        checked={field.value}
+                                        onCheckedChange={(checked) => field.onChange(checked)}
+                                    />
 
-                            </FormControl>
-                            <FormLabel htmlFor="terms">
-                                我已閱讀並同意 <Link to="/auth/term" className="text-blue-600">《隱私權保護政策》</Link>
-                            </FormLabel>
-                            <FormMessage />
+                                </FormControl>
+                                <p>
+                                    我已閱讀並同意<Link to="/auth/term" className="text-blue-600">《隱私權保護政策》</Link>
+                                </p>
+                            </div>
+                            <FormMessage className='min-h-5 text-red-500' />
                         </FormItem>
                     )}
                 />
+                <div className='flex w-full flex-col gap-4 justify-center items-center'>
+                    <RedButton
+                        disabled={isPending}
+                        width="w-4/5"
+                    >
+                        {isPending ? "註冊中..." : "註冊"}
+                    </RedButton>
+                </div>
 
-                <Button
-                    type="submit"
-                    className="w-2/3 cursor-pointer">
-                    註冊
-                </Button>
             </form>
         </Form >
     )

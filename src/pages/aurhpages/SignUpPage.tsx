@@ -1,16 +1,20 @@
-import PageContainer from '@/components/PageContainer'
+
+import AuthContainer from '@/components/container/AuthContainer'
 import SignUpForm from '@/form/authforms/SignUpForm'
 
 const SignUpPage = () => {
     const title = { label: "註冊" }
     return (
-        <PageContainer title={title}>
-            <div className="flex flex-col items-center">
-                <div className='w-2/3 p-5 mt-20  bg-gray-100 md:w-1/2'>
+        <AuthContainer title={title}>
+            <div className="flex h-full flex-col justify-center items-center">
+                <div className='w-2/3 p-5 my-8 space-y-3 bg-white'>
+                    <div className="text-lg font-bold text-center md:text-2xl ">
+                        會員註冊
+                    </div>
                     <SignUpForm />
                 </div>
             </div>
-        </PageContainer>
+        </AuthContainer>
     )
 }
 

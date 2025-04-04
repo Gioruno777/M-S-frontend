@@ -1,4 +1,5 @@
 import { useValidateToken } from "@/api/authApi";
+import Loading from "@/components/Loading";
 import React, { useContext } from "react";
 
 type authContextType = {
@@ -16,7 +17,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
             value={{
                 isLoggedIn: isLoggedIn
             }}>
-            {isLoading ? <div>Loading...</div> : children}
+            {isLoading ? <Loading /> : children}
         </AuthContext.Provider >
     )
 }
@@ -24,6 +25,6 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 export const useAuthContext = () => {
     const context = useContext(AuthContext);
     return context as authContextType
-};
+}
 
 export default AuthContextProvider

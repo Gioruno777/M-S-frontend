@@ -1,9 +1,9 @@
-import PageContainer from "@/components/PageContainer"
+import AuthContainer from "@/components/container/AuthContainer"
 
 const TermPage = () => {
     const title = { label: "隱私權聲明" }
     return (
-        <PageContainer title={title}>
+        <AuthContainer title={title}>
             <div className="p-6">
                 歡迎您瀏覽和使用本網站，安心食品服務股份有限公司 (以下稱「MOS」)為保護 您在本網站提供的個人資訊隱私，謹說明MOS可能蒐集、使用 您個人資料之相關情況及其範圍如下。如果您無法接受或遵守本頁相關條款，請您停止瀏覽及使用本網站。請注意如您繼續瀏覽或使用本網站， 您將被視為接受和同意遵守這些條款。
 
@@ -38,7 +38,7 @@ const TermPage = () => {
 
                 MOS 保留變更及修改本隱私權聲明相關條款之權利，本隱私權聲明相關條款之變更修改將於本網站適當位置公告，請您定期查閱，MOS 不會再另行通知或提醒。
             </div>
-        </PageContainer>
+        </AuthContainer>
     )
 }
 

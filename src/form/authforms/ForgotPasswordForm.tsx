@@ -1,15 +1,15 @@
 import { z } from 'zod'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useCheckEmail, useForgotPassword } from '@/api/authApi'
-import { useState } from 'react'
+import { useForgotPassword } from '@/api/authApi'
+import RedButton from '@/components/RedButton'
 
 const formSchema = z.object({
     email: z.string().email({ message: "請輸入Email" }),
 })
+
 export type ForgotPasswordFormData = z.infer<typeof formSchema>
 
 const ForgotPasswordForm = () => {
@@ -20,66 +20,58 @@ const ForgotPasswordForm = () => {
             email: "",
         }
     })
+    const { sendResettoken, isPending } = useForgotPassword()
 
-    const email = form.watch("email")
-    const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    const { exists, isLoading, refetch } = useCheckEmail(email)
-    const [showChecked, setShowChecked] = useState(false)
-
-
-    const forgotPasswordMutation = useForgotPassword()
-
-    const handelForgotPassword = async (values: ForgotPasswordFormData) => {
-        forgotPasswordMutation.mutate(values)
+    const handelForgotPassword = (formData: ForgotPasswordFormData) => {
+        sendResettoken(formData, {
+            onError: (err) => {
+                form.setError("root", {
+                    type: "manual",
+                    message: err.message,
+                })
+            }
+        })
     }
-    console.log(exists)
+
     return (
         <div>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(handelForgotPassword)}>
+                <form
+                    onSubmit={form.handleSubmit(handelForgotPassword)}
+                    className="space-y-8 ounded-lg md:p-5"
+                >
                     <FormField
                         control={form.control}
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>電子信箱</FormLabel>
+                                <div>電子信箱</div>
                                 <FormControl>
                                     <Input
                                         placeholder="請輸入電子郵件地址"
                                         {...field}
-
-                                        onChange={(e) => {
-                                            field.onChange(e);
-                                            setShowChecked(false)
-                                        }}
-
-                                        onBlur={() => {
-                                            if (isValidEmail(email)) {
-                                                refetch()
-                                                setShowChecked(true)
-                                            }
-
-                                        }}
                                     />
                                 </FormControl>
-                                {!isLoading && showChecked && (
-                                    exists === false ? (
-                                        <p className="text-red-500">請輸入有效email</p>
-                                    )
-                                        : null
-                                )}
-                                <FormMessage />
+                                <FormMessage className='min-h-5 text-red-500' />
                             </FormItem>
                         )}
                     />
-                    <Button
-                        type="submit"
-                        className="w-2/3 cursor-pointer">
-                        電子信箱驗證
-                    </Button>
+                    <div className='flex w-full flex-col gap-4 justify-center items-center'>
+                        <RedButton
+                            disabled={isPending}
+                            width="w-full "
+                        >
+                            {isPending ? "傳送中..." : "電子信箱驗證"}
+                        </RedButton>
+                        {form.formState.errors.root && (
+                            <p className="min-h-5 text-red-500 text-sm">
+                                {form.formState.errors.root.message}
+                            </p>
+                        )}
+                    </div>
                 </form>
             </Form>
-        </div>
+        </div >
     )
 }
 

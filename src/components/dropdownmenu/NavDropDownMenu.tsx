@@ -29,12 +29,11 @@ const NavDropDownMenu = ({ navLink, navButton, isLoggedIn, handleLogout }: Props
 
     useEffect(() => {
         const updateWidth = () => {
-            const availableWidth = document.documentElement.clientWidth; // ✅ 扣除滾動條寬度
-            console.log(availableWidth)
+            const availableWidth = document.documentElement.clientWidth
             setMenuWidth(`${availableWidth}px`);
         };
 
-        updateWidth(); // 初始加載時計算一次
+        updateWidth()
         window.addEventListener("resize", updateWidth);
 
         return () => {

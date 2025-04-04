@@ -1,5 +1,5 @@
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import Title from "./Title"
+import Title from "../Title"
 
 type Props = {
     children: React.ReactNode
@@ -10,13 +10,12 @@ type Props = {
     }
 }
 
-const PageContainer = ({ title, children }: Props) => {
-
+const AuthContainer = ({ title, children }: Props) => {
     return (
         <div className="container mx-auto" >
-            <div className='flex flex-col pt-3 gap-6 h-full '>
+            <div className='flex flex-col pt-3 gap-2 h-full '>
                 <Title title={title} />
-                <div className='flex-1  m-3 bg-gray-200 rounded-md shadow-lg'>
+                <div className='flex-1 m-3 bg-gray-100 rounded-md shadow-lg'>
                     {children}
                 </div>
             </div>
@@ -24,4 +23,4 @@ const PageContainer = ({ title, children }: Props) => {
     )
 }
 
-export default PageContainer
+export default AuthContainer

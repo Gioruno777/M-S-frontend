@@ -9,12 +9,17 @@ import NutritionFactsPage from "./pages/foodpages/NutritionFactsPage"
 import SearchBurgerPage from "./pages/foodpages/SearchBurgerPage"
 import SearchSidePage from "./pages/foodpages/SearchSidePage"
 import SearchBeveragePage from "./pages/foodpages/SearchBeveragePage"
+import LoginPage from "./pages/aurhpages/LoginPage"
+import SignUpPage from "./pages/aurhpages/SignUpPage"
+import ForgotPasswordPage from "./pages/aurhpages/ForgotPasswordPage"
+import ResetPasswordPage from "./pages/aurhpages/ResetPasswordPage"
+import TermPage from "./pages/aurhpages/TermPage"
+import { useAuthContext } from "./context/AuthConext"
 
 
 
 const App = () => {
-  // const { isLoggedIn } = useAuthContext()
-  // console.log(isLoggedIn)
+  const { isLoggedIn } = useAuthContext()
 
   return (
     <Routes>
@@ -40,16 +45,28 @@ const App = () => {
 
       </Route>
 
-      {/* <Route path="/auth">
+      <Route path="/auth" element={<Layout />}>
         {!isLoggedIn &&
+          <>
+            <Route path="login" element={<LoginPage />} />
+            <Route path="signup" element={<SignUpPage />} />
+            <Route path="forgotpassword" element={<ForgotPasswordPage />} />
+            <Route path="resetpassword/:resetToken" element={<ResetPasswordPage />} />
+          </>
+        }
+        <Route path="term" element={<TermPage />} />
+      </Route>
+
+      {/* <Route path="/auth">
+        {
           <>
             <Route path="login" element={<Layout ><LoginPage /></Layout>} />
             <Route path="signup" element={<Layout ><SignUpPage /></Layout>} />
-            <Route path="forgotpassword" element={<Layout ><ForgotPasswordPage /></Layout>} />
-            <Route path="resetpassword/:resetToken" element={<Layout ><ResetPasswordPage /></Layout>} />
+           
+            
           </>
         }
-        <Route path="term" element={<Layout ><TermPage /></Layout>} />
+        
       </Route> */}
 
       {/* <Route path="/member" element={<ProtectedRoute />}>

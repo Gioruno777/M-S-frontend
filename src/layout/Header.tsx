@@ -4,6 +4,7 @@ import { faBurger, faCrown, faPersonWalkingDashedLineArrowRight, faShoppingCart,
 import { UseLogout } from "@/api/authApi"
 import MainNav from "./nav/MainNav"
 import MobileNav from "./nav/MobileNav"
+import { useAuthContext } from "@/context/AuthConext"
 
 const Header = () => {
     const navLink = [
@@ -17,12 +18,11 @@ const Header = () => {
         { path: "/", icon: faPersonWalkingDashedLineArrowRight, label: "會員登出" }
     ]
 
-    // const { isLoggedIn } = useAuthContext()
-    const isLoggedIn = false
+    const { isLoggedIn } = useAuthContext()
 
-    const logoutMutation = UseLogout()
+    const { logout } = UseLogout()
     const handleLogout = () => {
-        logoutMutation.mutate()
+        logout()
     }
 
     return (

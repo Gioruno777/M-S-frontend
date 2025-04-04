@@ -23,10 +23,10 @@ const FoodDetailPage = () => {
         "beverage": { icon: faWineGlass, label: " 飲品", time: "全時段供應" }
     }
 
-    if (isError || !item) {
+    if (isError && !item) {
         return (
             <ErrorContainer>
-                ERROR😂😂😂
+                    ERROR😂😂😂
             </ErrorContainer>
         )
     }
