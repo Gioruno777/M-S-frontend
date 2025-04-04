@@ -1,6 +1,8 @@
 import { ForgotPasswordFormData } from "@/form/authforms/ForgotPasswordForm";
+import { LoginFormData } from "@/form/authforms/LoginForm";
 import { ResetPasswordFormData } from "@/form/authforms/ResetPasswordForm";
 import { SignUpFormData } from "@/form/authforms/SignUpForm";
+import { authClient, getAuthHeaders } from "@/utils/authClient";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -35,17 +37,11 @@ export const useSignUp = () => {
     return { signUp, isPending }
 }
 
-
-type loginType = {
-    email: string
-    password: string
-}
-
 export const useLogin = () => {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
 
-    const request = async (formData: loginType) => {
+    const request = async (formData: LoginFormData) => {
         const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
             method: "POST",
             credentials: "include",
@@ -57,6 +53,11 @@ export const useLogin = () => {
 
         if (!response.ok) {
             throw new Error(data.message || "登入失敗，請檢查帳號或密碼")
+        }
+
+        authClient.removeToken()
+        if (data.token) {
+            authClient.setToken(data.token)
         }
 
         return data
@@ -81,9 +82,13 @@ export const useLogin = () => {
 export const useValidateToken = () => {
 
     const request = async () => {
+
         const response = await fetch(`${API_BASE_URL}/api/auth/validatetoken`, {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            headers: {
+                ...getAuthHeaders()
+            }
         })
 
         if (!response.ok) {
@@ -124,6 +129,9 @@ export const UseLogout = () => {
         = useMutation({
             mutationFn: logoutResponse,
             onSuccess: async () => {
+
+                authClient.removeToken()
+
                 await queryClient.invalidateQueries({ queryKey: ["validateToken"] })
                 alert("登出成功")
                 navigate("/", { replace: true })
