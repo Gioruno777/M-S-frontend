@@ -41,6 +41,7 @@ const Header = () => {
                         navButton={navButton}
                         isLoggedIn={isLoggedIn}
                         handleLogout={handleLogout}
+                        isPending={isPending}
                     />
                 </div>
 
