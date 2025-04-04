@@ -20,7 +20,7 @@ const Header = () => {
 
     const { isLoggedIn } = useAuthContext()
 
-    const { logout } = UseLogout()
+    const { logout, isPending } = UseLogout()
     const handleLogout = () => {
         logout()
     }
@@ -50,6 +50,7 @@ const Header = () => {
                         navButton={navButton}
                         isLoggedIn={isLoggedIn}
                         handleLogout={handleLogout}
+                        isPending={isPending}
                     />
                 </div>
             </div>

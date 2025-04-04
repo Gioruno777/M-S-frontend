@@ -15,10 +15,11 @@ type Props = {
     navLink: menuItemType[]
     navButton: menuItemType[]
     isLoggedIn: boolean,
-    handleLogout: () => void
+    handleLogout: () => void,
+    isPending: boolean
 }
 
-const NavDropDownMenu = ({ navLink, navButton, isLoggedIn, handleLogout }: Props) => {
+const NavDropDownMenu = ({ navLink, navButton, isLoggedIn, handleLogout, isPending }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [menuItems, setMenuItems] = useState<menuItemType[]>([])
     const itemsClassname = "flex justify-between w-full items-center gap-2 p-2 text-lg font-semibold text-yellow-600 bg-white  rounded-md"
@@ -115,7 +116,9 @@ const NavDropDownMenu = ({ navLink, navButton, isLoggedIn, handleLogout }: Props
                                             icon={item.icon}
                                             className="text-current"
                                         />
-                                        <span>{item.label}</span>
+                                        <span>
+                                            {isPending ? "登出中..." : `${navButton[1].label}`}
+                                        </span>
                                     </div>
 
                                     <FontAwesomeIcon

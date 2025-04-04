@@ -118,19 +118,21 @@ export const UseLogout = () => {
     }
 
     const {
-        mutate: logout
+        mutate: logout,
+        isPending
     }
         = useMutation({
             mutationFn: logoutResponse,
             onSuccess: async () => {
                 await queryClient.invalidateQueries({ queryKey: ["validateToken"] })
+                alert("登出成功")
                 navigate("/", { replace: true })
             },
             onError: () => {
                 alert("登出失敗😅")
             }
         })
-    return { logout }
+    return { logout, isPending }
 }
 
 export const useForgotPassword = () => {

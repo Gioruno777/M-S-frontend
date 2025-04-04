@@ -17,10 +17,11 @@ type Props = {
         label: string;
     }[],
     isLoggedIn: boolean,
-    handleLogout: () => void
+    handleLogout: () => void,
+    isPending: boolean
 }
 
-const MobileNav = ({ navLink, navButton, isLoggedIn, handleLogout }: Props) => {
+const MobileNav = ({ navLink, navButton, isLoggedIn, handleLogout, isPending }: Props) => {
     const baseClass = "px-5 py-1 flex flex-col items-center text-xs gap-1 font-black text-red-600 rounded-md border border-red-500"
 
 
@@ -55,12 +56,13 @@ const MobileNav = ({ navLink, navButton, isLoggedIn, handleLogout }: Props) => {
                 <button
                     className={`${baseClass} cursor-pointer`}
                     onClick={() => handleLogout()}
+                    disabled={isPending}
                 >
                     <FontAwesomeIcon
                         icon={navButton[1].icon}
                         className='text-lg'
                     />
-                    <span>{navButton[1].label}</span>
+                    <span>{isPending ? "登出中..." : `${navButton[1].label}`}</span>
                 </button>
             }
             <NavDropDownMenu
@@ -68,6 +70,7 @@ const MobileNav = ({ navLink, navButton, isLoggedIn, handleLogout }: Props) => {
                 navButton={navButton}
                 isLoggedIn={isLoggedIn}
                 handleLogout={handleLogout}
+                isPending={isPending}
             />
 
         </nav >

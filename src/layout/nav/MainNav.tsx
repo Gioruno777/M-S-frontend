@@ -15,10 +15,11 @@ type Props = {
         label: string;
     }[],
     isLoggedIn: boolean,
-    handleLogout: () => void
+    handleLogout: () => void,
+    isPending: boolean
 }
 
-const MainNav = ({ navLink, navButton, isLoggedIn, handleLogout }: Props) => {
+const MainNav = ({ navLink, navButton, isLoggedIn, handleLogout, isPending }: Props) => {
 
     const baseClass = "mt-4 px-4 py-4 flex items-center gap-2 text-lg font-semibold text-yellow-500 rounded-md hover:bg-red-500  hover:text-white"
 
@@ -50,9 +51,10 @@ const MainNav = ({ navLink, navButton, isLoggedIn, handleLogout }: Props) => {
                 <button
                     className={`${baseClass} cursor-pointer`}
                     onClick={() => handleLogout()}
+                    disabled={isPending}
                 >
                     <FontAwesomeIcon icon={navButton[1].icon} />
-                    {navButton[1].label}
+                    {isPending ? "登出中..." : `${navButton[1].label}`}
                 </button>
             }
         </nav >
