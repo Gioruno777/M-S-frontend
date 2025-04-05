@@ -4,73 +4,72 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useGetPersonalInfo, useUpdatePersonalInfo } from '@/api/userApi'
+import { useGetUserInfo, useUpdateUserInfo } from '@/api/userApi'
+import RedButton from '@/components/RedButton'
 
 const formSchema = z.object({
     userName: z.string().min(1, { message: "請輸入使用者名稱" }),
     photo: z.instanceof(File, { message: "image is required" }).optional(),
-    password: z.string().min(1, { message: "請輸入新密碼" })
 })
 
-export type UpdatePersonalInfoFormData = z.infer<typeof formSchema>
+export type UpdateUserInfoFormData = z.infer<typeof formSchema>
 
-const UpdatePersonalInfoForm = () => {
+const UpdateUserInfoForm = () => {
 
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
-    const form = useForm<UpdatePersonalInfoFormData>({
+    const form = useForm<UpdateUserInfoFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             userName: ""
         },
     })
 
-    const { userInfo } = useGetPersonalInfo()
+    const { user } = useGetUserInfo()
 
     useEffect(() => {
-        if (userInfo) {
+        if (user) {
             form.reset({
-                userName: userInfo.userName
+                userName: user.userName
             });
-            setPreviewUrl(userInfo.photo);
+            setPreviewUrl(user.photo);
         }
-    }, [userInfo])
+    }, [user])
 
 
-    const { updatePersonalInfo, error } = useUpdatePersonalInfo()
+    const { updateUserInfo, isPending } = useUpdateUserInfo()
 
-    const handleUpdatePerosonalInfo = (values: UpdatePersonalInfoFormData) => {
+    const handleUpdateUserInfo = (values: UpdateUserInfoFormData) => {
         const formData = new FormData()
         formData.append("userName", values.userName)
-        formData.append("password", values.password)
         if (values.photo) {
             formData.append("photo", values.photo)
         }
-        updatePersonalInfo(formData)
+        updateUserInfo(formData)
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleUpdatePerosonalInfo)}>
+            <form
+                onSubmit={form.handleSubmit(handleUpdateUserInfo)}
+                className="space-y-4 rounded-lg md:p-5"
+            >
                 <FormField
                     control={form.control}
                     name="userName"
                     render={(({ field }) => (
                         <FormItem>
-                            <FormLabel>使用者名稱</FormLabel>
+                            <div>使用者名稱</div>
                             <FormControl>
                                 <Input
                                     placeholder="請輸入使用者名稱"
                                     {...field}
                                 />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage className='min-h-5 text-red-500' />
                         </FormItem>
                     ))}
                 />
-
-
                 <div>
                     <FormField
                         control={form.control}
@@ -94,51 +93,32 @@ const UpdatePersonalInfoForm = () => {
                                         }}
                                     />
                                 </FormControl>
-                                {previewUrl && (
-                                    <img
-                                        src={previewUrl}
-                                        alt="頭貼預覽"
-                                        className='w-2/3'
-                                    />
-                                )}
-                                <FormMessage />
+                                <div className='flex w-full flex justify-center items-center'>
+                                    {previewUrl && (
+                                        <img
+                                            src={previewUrl}
+                                            alt="頭貼預覽"
+                                            className='w-1/3'
+                                        />
+                                    )}
+                                </div>
+                                <FormMessage className='min-h-5 text-red-500' />
                             </FormItem>
                         )}
                     />
                 </div>
 
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>密碼驗證</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type='password'
-                                    placeholder="請輸入密碼"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage>
-                                {error && (
-                                    <FormMessage>
-                                        {error.message}
-                                    </FormMessage>
-                                )}
-                            </FormMessage>
-                        </FormItem>
-                    )}
-                />
-                <Button
-                    type="submit"
-                    className="w-2/3 cursor-pointer"
-                >
-                    更改
-                </Button>
+                <div className='flex w-full mt-6 flex-col gap-4 justify-center items-center'>
+                    <RedButton
+                        disabled={isPending}
+                        width="w-full"
+                    >
+                        {isPending ? "編輯中..." : "確認"}
+                    </RedButton>
+                </div>
             </form>
         </Form>
     )
 }
 
-export default UpdatePersonalInfoForm
+export default UpdateUserInfoForm

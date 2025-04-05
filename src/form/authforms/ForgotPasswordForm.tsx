@@ -38,7 +38,7 @@ const ForgotPasswordForm = () => {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(handelForgotPassword)}
-                    className="space-y-8 ounded-lg md:p-5"
+                    className="space-y-8 rounded-lg md:p-5"
                 >
                     <FormField
                         control={form.control}

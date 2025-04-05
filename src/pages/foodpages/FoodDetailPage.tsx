@@ -26,13 +26,13 @@ const FoodDetailPage = () => {
     if (isError && !item) {
         return (
             <ErrorContainer>
-                    ERROR😂😂😂
+                ERROR😂😂😂
             </ErrorContainer>
         )
     }
 
     if (isLoading) return (
-        <div className='flex-1 flex-justify items-center m-3'>
+        <div className='flex-1 flex-justify-center items-center m-3'>
             <Loading />
         </div>
     )

@@ -38,7 +38,6 @@ export const useSignUp = () => {
 }
 
 export const useLogin = () => {
-    const navigate = useNavigate()
     const queryClient = useQueryClient()
 
     const request = async (formData: LoginFormData) => {
@@ -66,17 +65,15 @@ export const useLogin = () => {
     const {
         mutate: login,
         isPending,
-        isError,
-        error
+        isSuccess
     } = useMutation({
         mutationFn: request,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ["validateToken"] })
-            navigate("/member/main", { replace: true })
         }
     })
 
-    return { login, isPending, isError, error }
+    return { login, isPending, isSuccess }
 }
 
 export const useValidateToken = () => {

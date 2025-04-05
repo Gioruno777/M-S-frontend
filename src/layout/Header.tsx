@@ -4,7 +4,7 @@ import { faBurger, faCrown, faPersonWalkingDashedLineArrowRight, faShoppingCart,
 import { UseLogout } from "@/api/authApi"
 import MainNav from "./nav/MainNav"
 import MobileNav from "./nav/MobileNav"
-import { useAuthContext } from "@/context/AuthConext"
+import { useAuthContext } from "@/context/AuthContext"
 
 const Header = () => {
     const navLink = [

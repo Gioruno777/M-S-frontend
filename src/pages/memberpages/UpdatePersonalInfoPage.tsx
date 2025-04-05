@@ -3,13 +3,20 @@ import UpdatePersonalInfoForm from "@/form/userforms/UpdatePersonalInfoForm"
 import { faBurger } from "@fortawesome/free-solid-svg-icons"
 
 
-const UpdatePersonalInfoPage = () => {
+const UpdateUserInfoPage = () => {
     const title = { icon: faBurger, label: "編輯個人資訊", }
     return (
         <MemberContainer title={title}>
-            <UpdatePersonalInfoForm />
+            <div className="flex h-full flex-col justify-center items-center">
+                <div className='w-2/3 p-4 my-8 shadow-lg '>
+                    <div className="text-lg font-bold text-center md:text-2xl ">
+                        編輯會員資訊
+                    </div>
+                    <UpdatePersonalInfoForm />
+                </div>
+            </div>
         </MemberContainer>
     )
 }
 
-export default UpdatePersonalInfoPage
+export default UpdateUserInfoPage

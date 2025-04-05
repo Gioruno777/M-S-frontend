@@ -30,7 +30,6 @@ const SearchBar = ({ searchQuery }: Props) => {
     const navigate = useNavigate()
     const location = useLocation()
     const basePath = location.pathname.split("/search")[0]
-    console.log(location.pathname, basePath)
 
     const handleSearchSubmit = (searchFormValues: SearchForm) => {
         const query = `?keyword=${encodeURIComponent(searchFormValues.searchQuery)}`;

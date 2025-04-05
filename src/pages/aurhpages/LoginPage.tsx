@@ -1,10 +1,16 @@
 import AuthContainer from '@/components/container/AuthContainer'
 import RedLink from '@/components/RedLink'
+import { useAuthContext } from '@/context/AuthContext'
 import LoginForm from '@/form/authforms/LoginForm'
+import { useEffect } from 'react'
+
+import { useLocation, useNavigate, } from 'react-router-dom'
 
 const LoginPage = () => {
-
+    const location = useLocation()
     const title = { label: "登入" }
+    const from = location.state?.from || "/"
+
 
     return (
         <AuthContainer title={title}>
@@ -14,7 +20,7 @@ const LoginPage = () => {
                         <div className="text-lg font-bold text-center md:text-2xl ">
                             會員登入
                         </div>
-                        <LoginForm />
+                        <LoginForm from={from} />
                     </div>
                 </div>
 

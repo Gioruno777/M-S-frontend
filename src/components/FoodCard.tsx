@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/context/AuthConext"
+import { useAuthContext } from "@/context/AuthContext"
 import AddToCartForm from "@/form/orderforms/AddToCartForm"
 import { foodType } from "@/types"
 import { Link } from "react-router-dom"

@@ -1,9 +1,10 @@
 import { useValidateToken } from "@/api/authApi";
+import ErrorContainer from "@/components/container/ErrorContainer";
 import Loading from "@/components/Loading";
 import React, { useContext } from "react";
 
 type authContextType = {
-    isLoggedIn: boolean
+    isLoggedIn: boolean,
 }
 
 const AuthContext = React.createContext<authContextType | null>(null);
@@ -15,9 +16,15 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <AuthContext.Provider
             value={{
-                isLoggedIn: isLoggedIn
+                isLoggedIn: isLoggedIn,
             }}>
-            {isLoading ? <Loading /> : children}
+            {isLoading ?
+                <div className='flex h-screen justify-center items-center '>
+                    <Loading />
+                </div>
+                :
+                children
+            }
         </AuthContext.Provider >
     )
 }

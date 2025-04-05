@@ -2,9 +2,12 @@ import { useLogin } from '@/api/authApi'
 import RedButton from '@/components/RedButton'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useAuthContext } from '@/context/AuthContext'
+import { faShuttleSpace } from '@fortawesome/free-solid-svg-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
 const formSchema = z.object({
@@ -14,7 +17,11 @@ const formSchema = z.object({
 
 export type LoginFormData = z.infer<typeof formSchema>
 
-const LoginForm = () => {
+type Props = {
+    from: string
+}
+
+const LoginForm = ({ from }: Props) => {
     const form = useForm<LoginFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -23,7 +30,17 @@ const LoginForm = () => {
         },
     })
 
-    const { login, isPending } = useLogin()
+
+    const { login, isPending, isSuccess } = useLogin()
+
+    const { isLoggedIn } = useAuthContext()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate(from, { replace: true })
+        }
+    }, [isSuccess, isLoggedIn])
 
     const handleLogin = (formData: LoginFormData) => {
         login(formData, {
@@ -34,6 +51,7 @@ const LoginForm = () => {
                 })
             }
         })
+
     }
 
     const handleInputChange = () => {
@@ -46,7 +64,7 @@ const LoginForm = () => {
         <Form {...form} >
             <form
                 onSubmit={form.handleSubmit(handleLogin)}
-                className="space-y-4 ounded-lg md:p-5"
+                className="space-y-4 rounded-lg my-8 md:p-5"
             >
                 <FormField
                     control={form.control}

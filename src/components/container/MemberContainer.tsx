@@ -21,7 +21,7 @@ const MemberContainer = ({ title, children }: Props) => {
         { name: "歷史訂單", site: "/member/purchasedetail" },
         { name: "交易明細", site: "/member/123" },
         { name: "更改密碼", site: "/member/updatepassword" },
-        { name: "編輯會員資訊", site: "/member/updatepersonalinfo" }
+        { name: "編輯會員資訊", site: "/member/updateuserinfo" }
     ]
 
     const urlName: Record<string, string[]> = {
@@ -30,7 +30,7 @@ const MemberContainer = ({ title, children }: Props) => {
         "side": ["歷史訂單", "/menu/side"],
         "purchasedetail": ["歷史訂單", "/member/purchasedetail"],
         "updatepassword": ["更改密碼", "/member/updatepassword"],
-        "updatepersonalinfo": ["編輯會員資訊", "/member/updatepersonalinfo"],
+        "updateuserinfo": ["編輯會員資訊", "/member/updateuserinfo"],
     }
     return (
         <div className="container mx-auto" >

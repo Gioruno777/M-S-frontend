@@ -14,7 +14,12 @@ import SignUpPage from "./pages/aurhpages/SignUpPage"
 import ForgotPasswordPage from "./pages/aurhpages/ForgotPasswordPage"
 import ResetPasswordPage from "./pages/aurhpages/ResetPasswordPage"
 import TermPage from "./pages/aurhpages/TermPage"
-import { useAuthContext } from "./context/AuthConext"
+import { useAuthContext } from "./context/AuthContext"
+import ProtectedRoute from "./components/ProtectedRoute"
+import MainPage from "./pages/memberpages/MainPage"
+
+import UpdateUserInfoPage from "./pages/memberpages/UpdatePersonalInfoPage"
+import UpdatePasswordPage from "./pages/memberpages/UpdatePasswordPage"
 
 
 
@@ -48,31 +53,38 @@ const App = () => {
       <Route path="/auth" element={<Layout />}>
         {!isLoggedIn &&
           <>
-            <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
             <Route path="forgotpassword" element={<ForgotPasswordPage />} />
             <Route path="resetpassword/:resetToken" element={<ResetPasswordPage />} />
           </>
         }
+        <Route path="login" element={<LoginPage />} />
         <Route path="term" element={<TermPage />} />
       </Route>
 
-      {/* <Route path="/auth">
-        {
-          <>
-            <Route path="login" element={<Layout ><LoginPage /></Layout>} />
-            <Route path="signup" element={<Layout ><SignUpPage /></Layout>} />
-           
-            
-          </>
-        }
-        
-      </Route> */}
+      <Route path="/member" element={
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      }
+      >
+        <Route path="main" element={<MainPage />} />
+        <Route path="updatepassword" element={<UpdatePasswordPage />} />
+        <Route path="updateuserinfo" element={<UpdateUserInfoPage />} />
+      </Route >
 
+      {/* <Route path="/member" element={<Layout />}>
+        <Route path="main" element={<MemberMainPage />} />
+      </Route > */}
+
+
+
+
+      < Route path="*" element={< Navigate to="/" />} />
       {/* <Route path="/member" element={<ProtectedRoute />}>
         <Route path="main" element={<Layout><MemberMainPage /></Layout>} />
-        <Route path="updatepassword" element={<Layout><MemberUpdatePasswordPage /></Layout>} />
-        <Route path="updatepersonalinfo" element={<Layout><UpdatePersonalInfoPage /></Layout>} />
+        
+        
         <Route path="purchasedetail" element={<Layout><PurchaseDetailPage /></Layout>} />
       </Route> */}
 
@@ -82,7 +94,7 @@ const App = () => {
       </Route> */}
 
 
-      <Route path="*" element={<Navigate to="/" />} />
+
     </Routes >
   )
 }
