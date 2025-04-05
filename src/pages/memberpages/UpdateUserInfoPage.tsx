@@ -1,5 +1,5 @@
 import MemberContainer from "@/components/container/MemberContainer"
-import UpdatePersonalInfoForm from "@/form/userforms/UpdatePersonalInfoForm"
+import UpdateUserInfoForm from "@/form/userforms/UpdatePersonalInfoForm"
 import { faBurger } from "@fortawesome/free-solid-svg-icons"
 
 
@@ -12,7 +12,7 @@ const UpdateUserInfoPage = () => {
                     <div className="text-lg font-bold text-center md:text-2xl ">
                         編輯會員資訊
                     </div>
-                    <UpdatePersonalInfoForm />
+                    <UpdateUserInfoForm />
                 </div>
             </div>
         </MemberContainer>

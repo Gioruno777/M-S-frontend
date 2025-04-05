@@ -1,10 +1,7 @@
 import AuthContainer from '@/components/container/AuthContainer'
 import RedLink from '@/components/RedLink'
-import { useAuthContext } from '@/context/AuthContext'
 import LoginForm from '@/form/authforms/LoginForm'
-import { useEffect } from 'react'
-
-import { useLocation, useNavigate, } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 const LoginPage = () => {
     const location = useLocation()

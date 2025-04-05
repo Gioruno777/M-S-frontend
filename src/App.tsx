@@ -17,8 +17,7 @@ import TermPage from "./pages/aurhpages/TermPage"
 import { useAuthContext } from "./context/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
 import MainPage from "./pages/memberpages/MainPage"
-
-import UpdateUserInfoPage from "./pages/memberpages/UpdatePersonalInfoPage"
+import UpdateUserInfoPage from "./pages/memberpages/UpdateUserInfoPage"
 import UpdatePasswordPage from "./pages/memberpages/UpdatePasswordPage"
 
 
