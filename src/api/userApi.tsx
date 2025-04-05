@@ -106,25 +106,25 @@ export const useUpdateUserInfo = () => {
     return { updateUserInfo, isPending }
 }
 
-// export const getPurchaseDetail = () => {
-//     const request = async () => {
-//         const response = await fetch(`${API_BASE_URL}/api/user/purchasedetail`, {
-//             method: "GET",
-//             credentials: "include",
-//         })
-//         const data = await response.json()
-//         if (!response.ok) {
-//             throw new Error("錯誤")
-//         }
-//         return data
-//     }
+export const getPurchaseDetail = () => {
+    const request = async () => {
+        const response = await fetch(`${API_BASE_URL}/api/user/purchasedetail`, {
+            method: "GET",
+            credentials: "include",
+        })
+        const data = await response.json()
+        if (!response.ok) {
+            throw new Error("錯誤")
+        }
+        return data
+    }
 
-//     const {
-//         data: purchaseDetail,
-//         isLoading
-//     } = useQuery({
-//         queryKey: ["getPurchaseDetail"],
-//         queryFn: request
-//     })
-//     return { purchaseDetail: purchaseDetail?.data || [], isLoading }
-// }
+    const {
+        data: purchaseDetail,
+        isLoading
+    } = useQuery({
+        queryKey: ["getPurchaseDetail"],
+        queryFn: request
+    })
+    return { purchaseDetail: purchaseDetail?.data || [], isLoading }
+}
