@@ -5,29 +5,29 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAddToCart } from '@/api/orderApi'
 
 type Props = {
-    productID: string
+    productId: string
 }
 
 const formSchema = z.object({
     quantity: z.number(),
-    productID: z.string()
+    productId: z.string()
 })
 
 export type AddToCartFormData = z.infer<typeof formSchema>
 
-const AddToCartForm = ({ productID }: Props) => {
+const AddToCartForm = ({ productId }: Props) => {
 
     const form = useForm<AddToCartFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             quantity: 0,
-            productID: productID
+            productId: productId
         }
     })
     const quantity = form.watch("quantity")
-    const { addToCart } = useAddToCart()
-    const handleAddotoCart = (body: AddToCartFormData) => {
-        addToCart(body)
+    const { addToCart, isPending } = useAddToCart()
+    const handleAddotoCart = (formData: AddToCartFormData) => {
+        addToCart(formData)
     }
 
     return (
@@ -73,21 +73,13 @@ const AddToCartForm = ({ productID }: Props) => {
                         </FormItem>
                     )}
                 />
-
-                {quantity === 0 ? (
-                    <button
-                        type="submit" disabled
-                        className="w-full p-1 text-sm font-semibold text-white bg-red-700 rounded-md md:text-lg text-center">
-                        加入購物車
-                    </button>
-                ) : (
-                    <button
-                        type="submit"
-                        className="w-full p-1 text-sm font-semibold text-white bg-red-700 rounded-md cursor-pointer md:text-lg text-center"
-                    >
-                        加入購物車
-                    </button>
-                )}
+                <button
+                    type="submit"
+                    disabled={isPending || quantity === 0}
+                    className={`w-full p-1 text-sm font-semibold text-white text-center bg-red-700 rounded-md md:text-lg  ${(quantity > 0) && "cursor-pointer"}`}
+                >
+                    {isPending ? "加入中..." : "加入購物車"}
+                </button>
             </form>
         </Form >
 

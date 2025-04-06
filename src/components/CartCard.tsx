@@ -13,9 +13,10 @@ export type deleteCartItemData = {
 const CartCard = ({ item }: Props) => {
     const { productId, imageUrl, name, price, quantity } = item
 
-    const { deleteCartItem } = useDeleteCartItem()
+    const { deleteCartItem, isPending } = useDeleteCartItem()
 
     const delItem = { productId: productId }
+
     const handleDeleteCartItem = (delItem: deleteCartItemData) => {
         deleteCartItem(delItem)
     }
@@ -52,10 +53,11 @@ const CartCard = ({ item }: Props) => {
             </div>
             <div className=" flex w-2/9 flex justify-center items-center ">
                 <button
+                    disabled={isPending}
                     className="w-4/5 p-1 text-sm font-semibold text-white bg-red-700 rounded-md cursor-pointer md:text-lg text-center"
                     onClick={() => handleDeleteCartItem(delItem)}
                 >
-                    刪除商品
+                    {isPending ? "刪除中..." : "刪除商品"}
                 </button>
             </div>
         </div >

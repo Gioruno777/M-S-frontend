@@ -6,8 +6,8 @@ import { useLocation } from 'react-router-dom'
 const LoginPage = () => {
     const location = useLocation()
     const title = { label: "登入" }
-    const from = location.state?.from || "/"
-
+    const afterLoginPath = location.state?.from || "/"
+    console.log(afterLoginPath)
 
     return (
         <AuthContainer title={title}>
@@ -17,7 +17,7 @@ const LoginPage = () => {
                         <div className="text-lg font-bold text-center md:text-2xl ">
                             會員登入
                         </div>
-                        <LoginForm from={from} />
+                        <LoginForm afterLoginPath={afterLoginPath} />
                     </div>
                 </div>
 

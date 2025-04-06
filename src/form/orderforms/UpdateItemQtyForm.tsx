@@ -24,10 +24,10 @@ const UpdateItemQtyForm = ({ quantity, productId }: Props) => {
         }
     })
 
-    const { updateCartItemQty } = useUpdateCartItemQty()
+    const { updateCartItemQty, isPending } = useUpdateCartItemQty()
 
-    const handleUpdateCartItemQty = (body: UpdateItemQtyFormData) => {
-        updateCartItemQty(body)
+    const handleUpdateCartItemQty = (formData: UpdateItemQtyFormData) => {
+        updateCartItemQty(formData)
     }
 
     return (
@@ -44,6 +44,7 @@ const UpdateItemQtyForm = ({ quantity, productId }: Props) => {
                                 >
                                     <button
                                         type="button"
+                                        disabled={isPending}
                                         className='w-1/5'
                                         onClick={() => {
                                             field.onChange(Math.max(1, field.value - 1))
@@ -64,6 +65,7 @@ const UpdateItemQtyForm = ({ quantity, productId }: Props) => {
                                     />
                                     <button
                                         type="button"
+                                        disabled={isPending}
                                         className='w-1/5'
                                         onClick={() => {
                                             field.onChange(field.value + 1)

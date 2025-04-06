@@ -17,10 +17,10 @@ const formSchema = z.object({
 export type LoginFormData = z.infer<typeof formSchema>
 
 type Props = {
-    from: string
+    afterLoginPath: string
 }
 
-const LoginForm = ({ from }: Props) => {
+const LoginForm = ({ afterLoginPath }: Props) => {
     const form = useForm<LoginFormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -37,7 +37,7 @@ const LoginForm = ({ from }: Props) => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            navigate(from, { replace: true })
+            navigate(afterLoginPath, { replace: true })
         }
     }, [isSuccess, isLoggedIn])
 

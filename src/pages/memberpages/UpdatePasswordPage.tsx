@@ -9,7 +9,7 @@ const UpdatePasswordPage = () => {
             <div className="flex h-full flex-col justify-center items-center">
                 <div className='w-2/3 p-4 my-8 space-y-3 shadow-lg bg-white'>
                     <div className="text-lg font-bold text-center md:text-2xl ">
-                        會員註冊
+                        更改密碼
                     </div>
                     <UpdatePasswordForm />
                 </div>

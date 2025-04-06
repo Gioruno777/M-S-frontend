@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import Layout from "./layout/Layout"
 import HomePage from "./pages/HomePage"
 import BurgerPage from "./pages/foodpages/BurgerPage"
@@ -19,11 +19,14 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import MainPage from "./pages/memberpages/MainPage"
 import UpdateUserInfoPage from "./pages/memberpages/UpdateUserInfoPage"
 import UpdatePasswordPage from "./pages/memberpages/UpdatePasswordPage"
+import CartPage from "./pages/orderPages/CartPage"
+import CheckoutPage from "./pages/orderPages/CheckoutPage"
 
 
 
 const App = () => {
   const { isLoggedIn } = useAuthContext()
+  const location = useLocation()
 
   return (
     <Routes>
@@ -62,7 +65,9 @@ const App = () => {
       </Route>
 
       <Route path="/member" element={
-        <ProtectedRoute>
+        <ProtectedRoute
+          afterLoginPath={location.pathname}
+        >
           <Layout />
         </ProtectedRoute>
       }
@@ -72,27 +77,19 @@ const App = () => {
         <Route path="updateuserinfo" element={<UpdateUserInfoPage />} />
       </Route >
 
-      {/* <Route path="/member" element={<Layout />}>
-        <Route path="main" element={<MemberMainPage />} />
-      </Route > */}
-
-
-
+      <Route path="/cart" element={
+        <ProtectedRoute
+          afterLoginPath="/menu/main"
+        >
+          <Layout />
+        </ProtectedRoute>
+      }
+      >
+        <Route path="main" element={<CartPage />} />
+        <Route path="checkout" element={<CheckoutPage />} />
+      </Route >
 
       < Route path="*" element={< Navigate to="/" />} />
-      {/* <Route path="/member" element={<ProtectedRoute />}>
-        <Route path="main" element={<Layout><MemberMainPage /></Layout>} />
-        
-        
-        <Route path="purchasedetail" element={<Layout><PurchaseDetailPage /></Layout>} />
-      </Route> */}
-
-      {/* <Route path="/order" element={<ProtectedRoute />}>
-        <Route path="cart" element={<Layout><CartPage /></Layout>} />
-        <Route path="checkout" element={<Layout><CheckoutPage /></Layout>} />
-      </Route> */}
-
-
 
     </Routes >
   )

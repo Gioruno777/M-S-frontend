@@ -1,17 +1,18 @@
 import { useAuthContext } from "@/context/AuthContext"
-import { Navigate, useLocation } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 
 type Props = {
     children: React.ReactNode
+    afterLoginPath: string
 }
 
-const ProtectedRoute = ({ children }: Props) => {
+const ProtectedRoute = ({ children, afterLoginPath }: Props) => {
     const { isLoggedIn } = useAuthContext()
-    const location = useLocation()
+
 
     if (!isLoggedIn) {
-        return <Navigate to="/auth/login" replace state={{ from: location.pathname }} />
+        return <Navigate to="/auth/login" replace state={{ from: afterLoginPath }} />
     }
 
     return <>{children}</>

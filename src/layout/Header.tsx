@@ -10,7 +10,7 @@ const Header = () => {
     const navLink = [
         { path: "/menu/main", icon: faBurger, label: "美味專區" },
         { path: "/member/main", icon: faCrown, label: "會員專區" },
-        { path: "/order/cart", icon: faShoppingCart, label: "線上訂餐" },
+        { path: "/cart/main", icon: faShoppingCart, label: "線上訂餐" },
     ]
 
     const navButton = [

@@ -57,7 +57,7 @@ const FoodCard = (food: Props) => {
                     <h3 className="min-h-12 text-gray-800 md:text-lg md:min-h-0 md:mb-2 ">{name}</h3>
                     <h3 className="mb-2 text-lg font-semibold text-yellow-600">$ {price}</h3>
 
-                    <AddToCartForm productID={_id} />
+                    <AddToCartForm productId={_id} />
                 </div>
             }
 

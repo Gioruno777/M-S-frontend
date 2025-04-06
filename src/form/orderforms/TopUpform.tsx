@@ -27,10 +27,10 @@ const TopUpform = ({ balance }: Props) => {
         } as any,
     })
 
-    const { topUp } = useTopUp()
+    const { topUp, isPending } = useTopUp()
 
-    const handleTopUp = (amount: TopUpFormData) => {
-        topUp(amount)
+    const handleTopUp = (formData: TopUpFormData) => {
+        topUp(formData)
         form.reset()
     }
 
@@ -89,22 +89,17 @@ const TopUpform = ({ balance }: Props) => {
                     </div>
                     <div className="w-px h-full bg-gray-400 mx-2" />
                     <div className="w-1/2 flex justify-center">
-                        {!form.formState.isValid ? (
-                            <div className="w-4/5 p-1 text-sm font-semibold text-white bg-red-700 rounded-md md:text-lg text-center">
-                                儲值
-                            </div>
-                        ) : (
-                            <button
-                                type="submit"
-                                className="w-4/5 p-1 text-sm font-semibold text-white bg-red-700 rounded-md cursor-pointer md:text-lg text-center"
-                            >
-                                儲值
-                            </button>
-                        )}
+                        <button
+                            type="submit"
+                            disabled={isPending}
+                            className={`w-4/5 p-1 text-sm font-semibold text-white bg-red-700 text-center rounded-md md:text-lg ${form.formState.isValid && "cursor-pointer"}`}
+                        >
+                            {isPending ? "儲值中..." : "儲值"}
+                        </button>
                     </div>
                 </div>
             </form>
-        </Form>
+        </Form >
     )
 }
 

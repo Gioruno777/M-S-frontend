@@ -3,6 +3,7 @@ import { AddToCartFormData } from "@/form/orderforms/AddToCartForm"
 import { CheckOutFormData } from "@/form/orderforms/CheckOutForm"
 import { TopUpFormData } from "@/form/orderforms/TopUpform"
 import { UpdateItemQtyFormData } from "@/form/orderforms/UpdateItemQtyForm"
+import { getAuthHeaders } from "@/utils/authClient"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
 
@@ -10,14 +11,15 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export const useTopUp = () => {
 
-    const topUprequest = async (amount: TopUpFormData) => {
-        const response = await fetch(`${API_BASE_URL}/api/order/topup/create-topup-session`, {
+    const request = async (formData: TopUpFormData) => {
+        const response = await fetch(`${API_BASE_URL}/api/order/topup`, {
             method: "POST",
             headers: {
+                ...getAuthHeaders(),
                 "Content-Type": "application/json"
             },
             credentials: "include",
-            body: JSON.stringify(amount)
+            body: JSON.stringify(formData)
         })
         const data = await response.json()
 
@@ -28,60 +30,63 @@ export const useTopUp = () => {
     }
 
     const {
-        mutate: topUp
+        mutate: topUp,
+        isPending
     } = useMutation({
-        mutationFn: topUprequest,
+        mutationFn: request,
         onSuccess: async (data) => {
             if (data?.url) {
                 window.location.href = data.url
             } else {
                 console.error("沒有取得 Stripe URL")
             }
-        },
-        onError: (error: Error) => {
-            console.log("QQ", error)
-        },
+        }
     })
 
-    return { topUp }
+    return { topUp, isPending }
 
 }
 
 export const useAddToCart = () => {
-    const addToCartRequest = async (body: AddToCartFormData) => {
+    const request = async (formData: AddToCartFormData) => {
         const response = await fetch(`${API_BASE_URL}/api/order/addtocart`, {
             method: "POST",
             headers: {
+                ...getAuthHeaders(),
                 "Content-Type": "application/json"
             },
             credentials: "include",
-            body: JSON.stringify(body)
+            body: JSON.stringify(formData)
         })
 
         const data = await response.json()
+
         if (!response.ok) {
             throw new Error()
         }
+
         return data
     }
 
     const {
-        mutate: addToCart
+        mutate: addToCart,
+        isPending
     } = useMutation({
-        mutationFn: addToCartRequest,
+        mutationFn: request,
         onSuccess: async () => {
             alert("加入購物車成功！")
             window.location.reload()
         }
     })
-    return { addToCart }
+    return { addToCart, isPending }
 }
 
 export const useGetCartItem = () => {
 
-    const getCartItemReqest = async () => {
+    const request = async () => {
         const response = await fetch(`${API_BASE_URL}/api/order/cartitem`, {
             method: "GET",
+            headers: { ...getAuthHeaders() },
             credentials: "include"
         })
 
@@ -94,23 +99,24 @@ export const useGetCartItem = () => {
         return data
     }
     const {
-        data: cartItems,
+        data,
         isLoading,
     } = useQuery({
-        queryKey: ["fetchCartItem"],
-        queryFn: getCartItemReqest
+        queryKey: ["getCartItem"],
+        queryFn: request
     })
-
-    return { cartItems: cartItems?.data.items || [], isLoading }
+    const items = data?.data?.items ?? []
+    return { items, isLoading }
 }
 
 export const useUpdateCartItemQty = () => {
     const queryClient = useQueryClient()
-    const updateCartItemQtyRequest = async (body: UpdateItemQtyFormData) => {
+    const request = async (body: UpdateItemQtyFormData) => {
         const response = await fetch(`${API_BASE_URL}/api/order/cartitem`, {
             method: "PATCH",
             credentials: "include",
             headers: {
+                ...getAuthHeaders(),
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(body)
@@ -123,27 +129,29 @@ export const useUpdateCartItemQty = () => {
     }
 
     const {
-        mutate: updateCartItemQty
+        mutate: updateCartItemQty,
+        isPending
     } = useMutation({
-        mutationFn: updateCartItemQtyRequest,
+        mutationFn: request,
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ["fetchCartItem"] })
         }
     })
 
-    return { updateCartItemQty }
+    return { updateCartItemQty, isPending }
 }
 
 
 export const useDeleteCartItem = () => {
-    const deleteCartItemRequest = async (body: deleteCartItemData) => {
+    const request = async (formData: deleteCartItemData) => {
         const response = await fetch(`${API_BASE_URL}/api/order/cartitem`, {
             method: "DELETE",
             credentials: "include",
             headers: {
+                ...getAuthHeaders(),
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(formData)
         })
 
         if (!response.ok) {
@@ -154,17 +162,17 @@ export const useDeleteCartItem = () => {
     }
 
     const {
-        mutate: deleteCartItem
+        mutate: deleteCartItem,
+        isPending
     } = useMutation({
-        mutationFn: deleteCartItemRequest,
-        onSuccess: async () => {
-            alert("加入購物車成功！")
+        mutationFn: request,
+        onSuccess: () => {
+            alert("已移除商品！")
             window.location.reload()
-
         }
     })
 
-    return { deleteCartItem }
+    return { deleteCartItem, isPending }
 }
 
 export const useCheckOut = () => {
@@ -176,6 +184,7 @@ export const useCheckOut = () => {
             method: "POST",
             credentials: "include",
             headers: {
+                ...getAuthHeaders(),
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(formData)
@@ -189,7 +198,8 @@ export const useCheckOut = () => {
     }
 
     const {
-        mutate: checkOut
+        mutate: checkOut,
+        isPending
     } = useMutation({
         mutationFn: request,
         onSuccess: async (data) => {
@@ -197,12 +207,11 @@ export const useCheckOut = () => {
                 window.location.href = data.url
             }
             else {
-                alert("付款成功！")
-                navigate("/")
+                alert("付款成功!")
+                navigate("/cart/main", { replace: true })
             }
-
         }
     })
 
-    return { checkOut }
+    return { checkOut, isPending }
 }
