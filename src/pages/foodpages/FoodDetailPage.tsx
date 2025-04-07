@@ -23,25 +23,29 @@ const FoodDetailPage = () => {
         "beverage": { icon: faWineGlass, label: " 飲品", time: "全時段供應" }
     }
 
-    if (isError && !item) {
+    if (isLoading) return (
+
+        <ErrorContainer>
+            <div className='flex-1 flex-justify-center items-center m-3'>
+                <Loading />
+            </div>
+        </ErrorContainer >
+    )
+
+    if (isError || !item) {
         return (
             <ErrorContainer>
-                ERROR😂😂😂
+                ERROR 😂😂😂
             </ErrorContainer>
         )
     }
-
-    if (isLoading) return (
-        <div className='flex-1 flex-justify-center items-center m-3'>
-            <Loading />
-        </div>
-    )
-    else return (
-        < MenuContainer
+    return (
+        <MenuContainer
             title={titleName[item.category]}
-            productName={item.name}>
+            productName={item.name}
+        >
             <FoodDetailCard data={item} />
-        </MenuContainer >
+        </MenuContainer>
     )
 }
 

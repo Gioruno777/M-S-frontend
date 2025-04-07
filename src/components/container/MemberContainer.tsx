@@ -10,16 +10,17 @@ type Props = {
         time?: string
     }
     children: React.ReactNode
+    note?: string
 }
 
-const MemberContainer = ({ title, children }: Props) => {
+const MemberContainer = ({ title, children, note }: Props) => {
 
     const menuTitle = { icon: faCrown, label: "會員專區" }
 
     const menuItems = [
         { name: "會員資訊", site: "/member/main" },
-        { name: "歷史訂單", site: "/member/purchasedetail" },
-        { name: "交易明細", site: "/member/123" },
+        { name: "歷史訂單", site: "/member/purchase" },
+        { name: "交易明細", site: "/member/transaction" },
         { name: "更改密碼", site: "/member/updatepassword" },
         { name: "編輯會員資訊", site: "/member/updateuserinfo" }
     ]
@@ -27,8 +28,8 @@ const MemberContainer = ({ title, children }: Props) => {
     const urlName: Record<string, string[]> = {
         "member": ["會員專區", "/member/main"],
         "main": ["會員資訊", "/menu/main"],
-        "side": ["歷史訂單", "/menu/side"],
-        "purchasedetail": ["歷史訂單", "/member/purchasedetail"],
+        "purchase": ["歷史訂單", "/member/purchase"],
+        "transaction": ["交易明細", "/member/transaction"],
         "updatepassword": ["更改密碼", "/member/updatepassword"],
         "updateuserinfo": ["編輯會員資訊", "/member/updateuserinfo"],
     }
@@ -36,7 +37,7 @@ const MemberContainer = ({ title, children }: Props) => {
         <div className="container mx-auto" >
 
             <div className=" flex flex-col h-full p-4 pt-4 space-y-4 ">
-                <Breadcrumb urlName={urlName} />
+                <Breadcrumb urlName={urlName} note={note} />
                 <div className="md:hidden ">
                     <SideBar menuTitle={menuTitle} menuItems={menuItems} />
                 </div>

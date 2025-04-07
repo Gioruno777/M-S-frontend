@@ -39,12 +39,12 @@ const TopUpform = ({ balance }: Props) => {
             <form onSubmit={form.handleSubmit(handleTopUp)} className="w-full h-full pb-3">
                 <div className="flex w-full h-1/3 items-center text-center">
 
-                    <div className="w-1/2 text-sm md:text-lg">餘額</div>
+                    <div className="w-1/2 text-sm font-semibold md:text-xl">餘額</div>
 
                     <div className="w-px h-full bg-gray-400 mx-2" />
 
                     <div className="w-1/2">
-                        <FormLabel className="text-sm md:text-lg">儲值金額</FormLabel>
+                        <FormLabel className="text-lg font-semibold md:text-xl">儲值金額</FormLabel>
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@ const TopUpform = ({ balance }: Props) => {
 
                                 <div className="w-1/2 p-2">
                                     <FormControl>
-                                        <select {...field} className="w-2/3 text-xs md:text-lg">
+                                        <select {...field} className="w-2/3 text-center text-xs md:text-lg">
                                             <option value="" hidden>
                                                 請選擇
                                             </option>
@@ -81,7 +81,7 @@ const TopUpform = ({ balance }: Props) => {
                 <div className="flex w-full  h-1/3 items-center text-center">
                     <div className="w-1/2 flex justify-center">
                         <Link
-                            to="/"
+                            to="/member/transaction"
                             className="w-4/5 p-1 text-sm font-semibold text-white bg-red-700 rounded-md md:text-lg text-center"
                         >
                             交易明細

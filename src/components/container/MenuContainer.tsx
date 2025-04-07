@@ -34,7 +34,7 @@ const MenuContainer = ({ title, children, productName }: Props) => {
     return (
         <div className="container mx-auto" >
             <div className="flex flex-col h-full p-4 pt-4 space-y-4 ">
-                <Breadcrumb urlName={urlName} productName={productName} />
+                <Breadcrumb urlName={urlName} note={productName} />
                 <div className="md:hidden ">
                     <SideBar menuTitle={menuTitle} menuItems={menuItems} />
                 </div>

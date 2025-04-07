@@ -21,6 +21,9 @@ import UpdateUserInfoPage from "./pages/memberpages/UpdateUserInfoPage"
 import UpdatePasswordPage from "./pages/memberpages/UpdatePasswordPage"
 import CartPage from "./pages/orderPages/CartPage"
 import CheckoutPage from "./pages/orderPages/CheckoutPage"
+import PurchasePage from "./pages/memberpages/PurchasePage"
+import TransactionPage from "./pages/memberpages/TransactionPage"
+import PurchaseDetailPage from "./pages/memberpages/PurchaseDetailPage"
 
 
 
@@ -73,6 +76,9 @@ const App = () => {
       }
       >
         <Route path="main" element={<MainPage />} />
+        <Route path="purchase" element={<PurchasePage />} />
+        <Route path="purchase/:purchaseId" element={<PurchaseDetailPage />} />
+        <Route path="transaction" element={<TransactionPage />} />
         <Route path="updatepassword" element={<UpdatePasswordPage />} />
         <Route path="updateuserinfo" element={<UpdateUserInfoPage />} />
       </Route >

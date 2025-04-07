@@ -38,21 +38,21 @@ const MemberMainPage = () => {
                         <Loading />
                     </div>
                     :
-                    <div className='flex flex-col p-4 mb-5 space-y-3 '>
+                    <div className='flex w-full flex-col p-4 mb-5 space-y-3 '>
                         <div className='md:px-2 md:text-2xl md:font-medium '
                         >
                             {user.userName},您好!
                         </div>
 
-                        <div className='flex justify-center'>
+                        <div className='flex w-full justify-center'>
                             <img
                                 src={user.photo}
-                                className='w-1/2 p-2 rounded-md shadow-lg md:w-3/7'
+                                className='w-2/3 p-2 rounded-md shadow-lg md:w-3/7'
                             />
                         </div>
 
-                        <div className='flex justify-center w-full '>
-                            <div className="w-1/2 p-2 rounded-md shadow-lg md:p-4 md:w-3/7">
+                        <div className='flex w-full justify-center w-full '>
+                            <div className="w-2/3 p-2 rounded-md shadow-lg md:p-4 md:w-3/7">
                                 <TopUpform balance={user.balance} />
                             </div>
                         </div>

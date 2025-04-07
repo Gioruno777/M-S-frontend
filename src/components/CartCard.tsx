@@ -54,7 +54,7 @@ const CartCard = ({ item }: Props) => {
             <div className=" flex w-2/9 flex justify-center items-center ">
                 <button
                     disabled={isPending}
-                    className="w-4/5 p-1 text-sm font-semibold text-white bg-red-700 rounded-md cursor-pointer md:text-lg text-center"
+                    className="w-4/5 p-1 text-xs font-semibold text-white bg-red-700 rounded-md cursor-pointer md:text-lg text-center"
                     onClick={() => handleDeleteCartItem(delItem)}
                 >
                     {isPending ? "刪除中..." : "刪除商品"}

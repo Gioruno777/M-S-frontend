@@ -43,3 +43,21 @@ export type ItemType = {
     price: number
 
 }
+
+export type PurchaseType = {
+    id: string,
+    purchaseId: string,
+    createdAt: string,
+    method: string,
+    amount: number
+}
+
+export type TransactionType = {
+    id: string,
+    transactionId: string,
+    createdAt: string,
+    type: string,
+    amount: number,
+    previousBalance: number,
+    record: string
+}

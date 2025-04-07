@@ -6,10 +6,10 @@ import { Link } from "react-router-dom"
 const HomePage = () => {
     const imgList = [
         { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1742807977/photo/user_70b58e29-52c1-4abe-8986-ce630340d035.jpg", site: "/menu/main" },
-        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1742807977/photo/user_70b58e29-52c1-4abe-8986-ce630340d035.jpg", site: "/menu/main" },
-        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1742807977/photo/user_70b58e29-52c1-4abe-8986-ce630340d035.jpg", site: "/menu/main" },
-        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1742807977/photo/user_70b58e29-52c1-4abe-8986-ce630340d035.jpg" },
-        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1742807977/photo/user_70b58e29-52c1-4abe-8986-ce630340d035.jpg" }
+        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1744020332/photo/user_3d4c10f8-d49c-4e68-bdb9-1889bfbedc86.jpg" },
+        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1744020120/photo/user_3d4c10f8-d49c-4e68-bdb9-1889bfbedc86.jpg", site: "/menu/main" },
+        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1744020020/photo/user_3d4c10f8-d49c-4e68-bdb9-1889bfbedc86.jpg", site: "/menu/main" },
+        { image: "https://res.cloudinary.com/ddamsnyat/image/upload/v1744020227/photo/user_3d4c10f8-d49c-4e68-bdb9-1889bfbedc86.jpg" }
 
     ]
 
@@ -33,10 +33,10 @@ const HomePage = () => {
                         <SwiperSlide key={i} className="flex justify-centers items-centers">
                             {img.site ? (
                                 <Link to={img.site}>
-                                    <img src={img.image} alt={`Slide ${i + 1}`} className="w-full h-40 object-cover rounded md:h-160" />
+                                    <img src={img.image} alt={`Slide ${i + 1}`} className="w-full  rounded md:h-160" />
                                 </Link>
                             ) : (
-                                <img src={img.image} alt={`Slide ${i + 1}`} className="w-full h-40  object-cover rounded md:h-160" />
+                                <img src={img.image} alt={`Slide ${i + 1}`} className="w-full  rounded md:h-160" />
                             )}
                         </SwiperSlide>
                     ))}

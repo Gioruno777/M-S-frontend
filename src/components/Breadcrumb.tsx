@@ -2,10 +2,10 @@ import { Link, useLocation } from "react-router-dom"
 
 type Props = {
     urlName: Record<string, string[]>
-    productName?: string
+    note?: string
 }
 
-const Breadcrumb = ({ urlName, productName }: Props) => {
+const Breadcrumb = ({ urlName, note }: Props) => {
     const location = useLocation()
     const pathSegments = location.pathname.split("/").filter(Boolean)
     const threshold = pathSegments.length - 1
@@ -30,7 +30,7 @@ const Breadcrumb = ({ urlName, productName }: Props) => {
                                 {` > ` + urlName[segment][0]}
                             </span>
                     ) : (
-                        <span key={productName}>{` > ` + productName}</span>
+                        <span key={note}>{` > ` + note}</span>
                     )
                 ))
             }

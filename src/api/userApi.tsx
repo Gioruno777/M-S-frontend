@@ -106,25 +106,89 @@ export const useUpdateUserInfo = () => {
     return { updateUserInfo, isPending }
 }
 
-export const getPurchaseDetail = () => {
+export const getPurchase = () => {
     const request = async () => {
-        const response = await fetch(`${API_BASE_URL}/api/user/purchasedetail`, {
+        const response = await fetch(`${API_BASE_URL}/api/user/purchase`, {
             method: "GET",
+            headers: {
+                ...getAuthHeaders(),
+            },
             credentials: "include",
         })
-        const data = await response.json()
+
         if (!response.ok) {
             throw new Error("錯誤")
         }
-        return data
+        return response.json()
     }
 
     const {
-        data: purchaseDetail,
+        data,
         isLoading
     } = useQuery({
-        queryKey: ["getPurchaseDetail"],
+        queryKey: ["getPurchase"],
         queryFn: request
     })
-    return { purchaseDetail: purchaseDetail?.data || [], isLoading }
+
+    const purchases = data?.data?.purchases ?? []
+
+    return { purchases, isLoading }
+}
+
+export const getTransaction = () => {
+    const request = async () => {
+        const response = await fetch(`${API_BASE_URL}/api/user/transaction`, {
+            method: "GET",
+            headers: {
+                ...getAuthHeaders(),
+            },
+            credentials: "include",
+        })
+
+        if (!response.ok) {
+            throw new Error("錯誤")
+        }
+        return response.json()
+    }
+    const {
+        data,
+        isLoading
+    } = useQuery({
+        queryKey: ["getTransaction"],
+        queryFn: request
+    })
+
+    const transactions = data?.data?.transactions ?? []
+
+    return { transactions, isLoading }
+}
+
+export const getPurchaseDetail = (purchaseId?: string) => {
+    const request = async () => {
+        const response = await fetch(`${API_BASE_URL}/api/user/purchase/${purchaseId}`, {
+            method: "GET",
+            headers: {
+                ...getAuthHeaders(),
+            },
+            credentials: "include",
+        })
+
+        if (!response.ok) {
+            throw new Error("錯誤")
+        }
+        return response.json()
+    }
+    const {
+        data,
+        isLoading,
+        isError
+    } = useQuery({
+        queryKey: ["getPurchaseDetail"],
+        queryFn: request,
+        enabled: !!purchaseId
+    })
+
+    const purchase = data?.data?.purchase ?? []
+
+    return { purchase, isLoading, isError }
 }
