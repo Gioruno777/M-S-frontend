@@ -4,28 +4,23 @@ import Loading from '@/components/Loading'
 import TopUpform from '@/form/orderforms/TopUpform'
 import { faBurger } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 const MemberMainPage = () => {
     const title = { icon: faBurger, label: " 會員資訊", }
     const { user, isLoading } = useGetUserInfo()
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (isLoading) return
 
         const params = new URLSearchParams(window.location.search)
-        const isTopUpSuccess = params.get("topup_success") === "true"
-        const isTopupCancelled = params.get("topup_cancelled") === "true"
+        const isCancelled = params.get("topup_cancelled") === "true"
 
-        if (isTopUpSuccess) {
-            alert("儲值成功！")
-            window.history.replaceState(null, "", "/member/main")
-        }
-
-        if (isTopupCancelled) {
+        if (isCancelled) {
+            navigate("/member/main", { replace: true })
             alert("儲值取消！")
-            window.history.replaceState(null, "", "/member/main")
         }
 
     }, [isLoading])

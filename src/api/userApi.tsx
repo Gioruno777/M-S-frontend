@@ -106,9 +106,9 @@ export const useUpdateUserInfo = () => {
     return { updateUserInfo, isPending }
 }
 
-export const getPurchase = () => {
+export const getPurchases = () => {
     const request = async () => {
-        const response = await fetch(`${API_BASE_URL}/api/user/purchase`, {
+        const response = await fetch(`${API_BASE_URL}/api/user/purchases`, {
             method: "GET",
             headers: {
                 ...getAuthHeaders(),
@@ -126,7 +126,7 @@ export const getPurchase = () => {
         data,
         isLoading
     } = useQuery({
-        queryKey: ["getPurchase"],
+        queryKey: ["getPurchases"],
         queryFn: request
     })
 
@@ -135,9 +135,9 @@ export const getPurchase = () => {
     return { purchases, isLoading }
 }
 
-export const getTransaction = () => {
+export const getTransactions = () => {
     const request = async () => {
-        const response = await fetch(`${API_BASE_URL}/api/user/transaction`, {
+        const response = await fetch(`${API_BASE_URL}/api/user/transactions`, {
             method: "GET",
             headers: {
                 ...getAuthHeaders(),
@@ -154,7 +154,7 @@ export const getTransaction = () => {
         data,
         isLoading
     } = useQuery({
-        queryKey: ["getTransaction"],
+        queryKey: ["getTransactions"],
         queryFn: request
     })
 
@@ -165,7 +165,7 @@ export const getTransaction = () => {
 
 export const getPurchaseDetail = (purchaseId?: string) => {
     const request = async () => {
-        const response = await fetch(`${API_BASE_URL}/api/user/purchase/${purchaseId}`, {
+        const response = await fetch(`${API_BASE_URL}/api/user/purchases/${purchaseId}`, {
             method: "GET",
             headers: {
                 ...getAuthHeaders(),
@@ -191,4 +191,36 @@ export const getPurchaseDetail = (purchaseId?: string) => {
     const purchase = data?.data?.purchase ?? []
 
     return { purchase, isLoading, isError }
+}
+
+export const useGetTransactionDeatail = (transactionId?: string) => {
+
+    const request = async () => {
+        const response = await fetch(`${API_BASE_URL}/api/user/transactions/${transactionId}`, {
+            method: "GET",
+            headers: {
+                ...getAuthHeaders(),
+            },
+            credentials: "include",
+        })
+
+        if (!response.ok)
+            throw new Error("無此交易")
+
+        return response.json()
+    }
+
+    const {
+        data,
+        isLoading,
+        isError
+    } = useQuery({
+        queryKey: ["getPurchaseDetail"],
+        queryFn: request,
+        enabled: !!transactionId
+    })
+    const transaction = data?.data?.transaction ?? []
+
+    return { transaction, isLoading, isError }
+
 }

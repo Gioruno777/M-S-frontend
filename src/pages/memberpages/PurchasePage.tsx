@@ -1,4 +1,4 @@
-import { getPurchase } from "@/api/userApi"
+import { getPurchases } from "@/api/userApi"
 import MemberContainer from "@/components/container/MemberContainer"
 import Loading from "@/components/Loading"
 import { PurchaseType } from "@/types"
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 
 const PurchasePage = () => {
     const title = { icon: faBurger, label: " 歷史訂單", }
-    const { purchases, isLoading } = getPurchase()
+    const { purchases, isLoading } = getPurchases()
     return (
         <MemberContainer title={title}>
             {isLoading ?

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTopUp } from '@/api/orderApi'
@@ -44,7 +44,7 @@ const TopUpform = ({ balance }: Props) => {
                     <div className="w-px h-full bg-gray-400 mx-2" />
 
                     <div className="w-1/2">
-                        <FormLabel className="text-lg font-semibold md:text-xl">儲值金額</FormLabel>
+                        <div className="text-sm font-semibold md:text-xl">儲值金額</div>
                     </div>
                 </div>
 
@@ -67,9 +67,9 @@ const TopUpform = ({ balance }: Props) => {
                                             <option value="" hidden>
                                                 請選擇
                                             </option>
-                                            <option value="50000">500元</option>
-                                            <option value="100000">1000元</option>
-                                            <option value="200000">2000元</option>
+                                            <option value="500">500元</option>
+                                            <option value="1000">1000元</option>
+                                            <option value="2000">2000元</option>
                                         </select>
                                     </FormControl>
                                 </div>

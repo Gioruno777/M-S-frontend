@@ -207,11 +207,40 @@ export const useCheckOut = () => {
                 window.location.href = data.url
             }
             else {
-                alert("付款成功!")
-                navigate("/cart/main", { replace: true })
+                alert("付款成功")
+                navigate(`/member/purchase/${data.transaction}`, { replace: true })
             }
         }
     })
 
     return { checkOut, isPending }
+}
+
+export const useGetLatestnote = () => {
+    const request = async () => {
+        const response = await fetch(`${API_BASE_URL}/api/order/latestnote`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                ...getAuthHeaders(),
+                "Content-Type": "application/json"
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error("付款失敗")
+        }
+
+        return response.json()
+    }
+
+    const {
+        data,
+        isLoading
+    } = useQuery({
+        queryKey: ["getLatestNote"],
+        queryFn: request
+    })
+    const note = data?.data?.note ?? null
+    return { note, isLoading }
 }

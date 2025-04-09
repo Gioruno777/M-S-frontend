@@ -5,8 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/ui/input'
 import { RadioGroup } from '@radix-ui/react-radio-group'
 import { RadioGroupItem } from '@/components/ui/radio-group'
-import { useCheckOut } from '@/api/orderApi'
+import { useCheckOut, useGetLatestnote } from '@/api/orderApi'
 import RedButton from '@/components/RedButton'
+import { useEffect } from 'react'
 
 type Props = {
     amount: number
@@ -31,10 +32,19 @@ const CheckOutForm = ({ amount, balance }: Props) => {
             note: ""
         }
     })
+    const { note, isLoading } = useGetLatestnote()
+
+    useEffect(() => {
+        if (!isLoading && note) {
+            form.setValue("note", note)
+        }
+    }, [note, isLoading])
 
     const isInsufficient = balance < amount;
 
     const { checkOut, isPending } = useCheckOut()
+
+
 
     const handleCheckOut = (formData: CheckOutFormData) => {
         checkOut(formData)

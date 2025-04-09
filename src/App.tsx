@@ -24,6 +24,7 @@ import CheckoutPage from "./pages/orderPages/CheckoutPage"
 import PurchasePage from "./pages/memberpages/PurchasePage"
 import TransactionPage from "./pages/memberpages/TransactionPage"
 import PurchaseDetailPage from "./pages/memberpages/PurchaseDetailPage"
+import TransactionDetailPage from "./pages/memberpages/TransactionDetailPage"
 
 
 
@@ -79,6 +80,7 @@ const App = () => {
         <Route path="purchase" element={<PurchasePage />} />
         <Route path="purchase/:purchaseId" element={<PurchaseDetailPage />} />
         <Route path="transaction" element={<TransactionPage />} />
+        <Route path="transaction/:transactionId" element={<TransactionDetailPage />} />
         <Route path="updatepassword" element={<UpdatePasswordPage />} />
         <Route path="updateuserinfo" element={<UpdateUserInfoPage />} />
       </Route >

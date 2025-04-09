@@ -28,13 +28,7 @@ const CheckoutPage = () => {
         if (isCartLoading) return
 
         const params = new URLSearchParams(window.location.search)
-        const isSuccess = params.get("order_success") === "true"
         const isCancelled = params.get("order_cancelled") === "true"
-
-        if (isSuccess) {
-            alert("下單成功！")
-            window.history.replaceState(null, "", "/cart/checkout")
-        }
 
         if (isCancelled) {
             alert("請重新付款！")
@@ -46,7 +40,7 @@ const CheckoutPage = () => {
     useEffect(() => {
         if (isCartLoading) return
         if (!isCartLoading && items.length === 0) {
-            navigate("/cart/main", { replace: true })
+            navigate("/main/cart", { replace: true })
         }
     }, [isCartLoading, items, navigate])
 

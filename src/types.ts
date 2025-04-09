@@ -59,5 +59,6 @@ export type TransactionType = {
     type: string,
     amount: number,
     previousBalance: number,
+    status: string,
     record: string
 }
