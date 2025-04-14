@@ -18,7 +18,7 @@ const MemberContainer = ({ title, children, note }: Props) => {
     const menuTitle = { icon: faCrown, label: "會員專區" }
 
     const menuItems = [
-        { name: "會員資訊", site: "/member/main" },
+        { name: "會員主頁", site: "/member/main" },
         { name: "歷史訂單", site: "/member/purchase" },
         { name: "交易明細", site: "/member/transaction" },
         { name: "更改密碼", site: "/member/updatepassword" },

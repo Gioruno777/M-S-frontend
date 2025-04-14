@@ -1,50 +1,76 @@
-# React + TypeScript + Vite
+# MØSBurger-Backend
+# 1.簡介
+這是模擬電商平台常見功能的全端專案，包含商品展示、帳戶驗證、會員管理和線上購物。支援信用卡和會員卡兩種支付方式，並搭配完善的資料流程提供用戶最好的體驗。
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+本篇將以介紹前端功能與架構為主
 
-Currently, two official plugins are available:
+# 2.系統功能
+本系統有四大核心功能：商品展示、帳戶驗證、會員管理、線上購物。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 商品展示
+- **展示功能**：顯示各商品的詳細資訊
+- **排序功能**：商品可依照價格和卡路里排序
+- **搜尋功能**：根據關鍵字搜尋商品
+- **下單功能**：登入成功後可將商品加入購物車
 
-## Expanding the ESLint configuration
+### 帳戶驗證
+- **註冊功能**：建立專屬帳號
+- **登入功能**：登入後可使用會員功能
+- **忘記密碼**：寄送 email 驗證信重設密碼
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 會員管理
+- **會員資訊**：顯示使用者名稱、會員卡面和會員卡餘額
+- **儲值功能**：經由第三方金流（Stripe）儲值會員卡
+- **交易明細**：紀錄會員卡交易紀錄
+- **歷史訂單**：紀錄曾購買的商品詳情
+- **更改密碼**：可更改密碼，並於下次登入生效
+- **編輯會員資訊**：可修改使用者名稱和會員卡面
 
-- Configure the top-level `parserOptions` property like this:
+### 線上購物
+- **購物車**：紀錄預計購買的商品，同時也可以修改商品數量
+- **結帳功能**：可填寫備註並選擇以會員卡或信用卡付款
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+# 3.技術
+**程式語言**：TypeScript
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+**前端技術**：React、TailwindCSS、shadcn/ui
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+**後端技術**：Node.js(Express)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+**資料庫與ORM**：MongoDB(Mongoose)、PostgreSQL(Prisma)
+
+**開發工具與環境**：Git、VS Code、Docker、WSL
+
+**第三方服務**：Gmail API、Stripe、Cloudinary
+
+**驗證與安全**：JWT、express-validator、Zod
+
+# 4.系統流程
+## 4.1 狀態管理
+  本系統會根據JWT Token判斷登入狀態，登入狀態會影響頁面的功能和訪問權限，本小節將介紹與登入狀態有密切關係的頁面:
+  ### 導覽列
+  ![ERD 不同登入狀態的導覽列](./docs/nav.png)
+  圖4.1 本系統導覽列於行動端登入前後範例圖
+
+  本系統導覽列採用響應式設計，會依據裝置尺寸調整顯示方式。如圖4.1所示，左圖為未登入的導覽列；右圖為登入後的導覽列。系統會在未登入狀態提供會員登入功能，在登入狀態提供和登出功能。
+
+  ### 商品展示
+  貼按鈕
+  ### 帳戶驗證
+    
+  ### 會員管理
+  
+  ### 線上購物
+
+## 4.2 會員儲值
+
+## 4.3 線上購物
+
+# 5.系統頁面
+## 5.1 商品展示
+搜尋\排序 
+## 5.2 帳戶驗證 
+
+## 5.3 會員管理
+
+## 5.4 線上購物

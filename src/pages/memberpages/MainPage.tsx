@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 const MemberMainPage = () => {
-    const title = { icon: faBurger, label: " 會員資訊", }
+    const title = { icon: faBurger, label: " 會員主頁", }
     const { user, isLoading } = useGetUserInfo()
     const navigate = useNavigate()
 
