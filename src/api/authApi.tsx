@@ -215,7 +215,7 @@ export const useResetPassword = (resetToken: string) => {
         mutationFn: request,
         onSuccess: () => {
             alert("重設成功")
-            navigate("/", { replace: true })
+            navigate("/auth/login", { replace: true })
         },
         onError: () => {
             alert("請求逾時")
