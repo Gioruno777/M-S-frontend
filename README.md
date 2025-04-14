@@ -98,7 +98,7 @@
 
   #### 線上購物
 <div align="center">
-  <img src="./docs/memberTable.png" alt="帳戶驗證訪問權限比較表"/>
+  <img src="./docs/cartTable.png" alt="帳戶驗證訪問權限比較表"/>
 </div>
   表4.3：線上購物頁面訪問權限比較表
 
