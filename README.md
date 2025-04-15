@@ -160,32 +160,76 @@
 <div align="center">
   <img src="./docs/menuMain.png" alt="美食專區主餐"/>
 </div>
+圖 5.2：美食專區主餐頁面
 <div align="center">
   <img src="./docs/menuSide.png" alt="美食專區附餐"/>
 </div>
+圖 5.3：美食專區附餐頁面
 <div align="center">
   <img src="./docs/menuBeverage.png"alt="美食專區飲品"/>
 </div>
-圖 5.5：美食專區頁面
+圖 5.4：美食專區飲品頁面
 
 本系統將商品分為主餐頁面、附餐頁面和飲品頁面。
 <div align="center">
   <img src="./docs/menuSearchSort.png" alt="搜尋排序功能示意圖"/>
 </div>
-圖 5.3: 搜尋排序功能示意圖
+圖 5.5: 搜尋排序功能示意圖
 
 提供關鍵字搜尋還有排序功能，圖5.3為搜尋"烤雞"關鍵字和價錢降冪排序。
 
 <div align="center">
   <img src="./docs/menuDetail.png" alt="商品細節頁面"/>
 </div>
-圖 5.4: 商品細節頁面
+圖 5.6: 商品細節頁面
 
 當點擊商品卡片，可以了解更多商品詳情，圖5.4為蜜汁起司烤雞堡的商品詳情。
 
-
-
 ## 5.3 帳戶驗證 
+
+<div align="center">
+  <img src="./docs/login.png" alt="登入頁面"/>
+</div>
+圖 5.7: 登入頁面
+
+會員在登入頁面輸入正確的信箱和密碼才能使用會員服務，此外也有提供註冊和忘記密碼的功能(圖5.7)。
+
+<div align="center">
+  <img src="./docs/signUp.png" alt="註冊頁"/>
+</div>
+圖 5.8: 註冊頁面
+
+如圖5.8所示，系統有設置表單驗證功能，幫助使用者順利註冊會員。
+
+<div align="center">
+  <img src="./docs/forgetPassword.png" alt="忘記密碼頁面"/>
+</div>
+圖 5.9:忘記密碼頁面
+
+會員不小心忘記密碼，可透過電子信箱驗證重設密碼。如圖5.9所示，當輸入電子郵件後，系統會提示信件已寄出。
+
+<div align="center">
+  <img src="./docs/forgetPassword.png" alt="收信畫面"/>
+</div>
+圖 5.10:收信示意圖
+
+打開信箱可看到收到驗證信，當使用者點擊信件的連結(圖5.10)可導向至重設密碼頁面。
+
+<div align="center">
+  <img src="./docs/resetPassword.png" alt="重設密碼頁面"/>
+</div>
+圖 5.11:重設密碼頁面
+
+如圖5.11所示，當重設密碼成功，系統會提示重設成功。之後，會員就可以使用新密碼進行登入。
+
+<div align="center">
+  <img src="./docs/error.png" alt="重設密碼頁面"/>
+</div>
+圖 5.12:重設密碼逾時頁面
+
+但是如果會員沒在限制時間內完成重設密碼的操作，或是重設成功後又訪問該連結，系統會顯示操作逾時(圖5.12)。
+
+
 
 ## 5.4 會員管理
 
