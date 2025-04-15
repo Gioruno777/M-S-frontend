@@ -148,10 +148,35 @@
 會員卡：本系統有限制如果會員卡餘額無法支付消費金額，不能選擇會員卡付款。當使用會員卡付款後，頁面會直接導向歷史訂單頁面，並顯示該筆訂單付款成功。
 
 # 5.系統頁面
-## 5.1 商品展示
-搜尋\排序 
-## 5.2 帳戶驗證 
+##
 
-## 5.3 會員管理
+## 5.2 美食專區
+<p align="center">
+  <img src="./docs/menuMain.png" alt="美食專區主餐" width="30%" style="margin-right:1%"  />
+  <img src="./docs/menuSide.png" alt="美食專區附餐" width="30%" style="margin-right:1%" />
+  <img src="./docs/menuBeverage.png"alt="美食專區飲品"width="30%" />
+</p>
+圖 5.1：美食專區頁面
 
-## 5.4 線上購物
+本系統將商品分為主餐頁面、附餐頁面和飲品頁面。
+
+
+<div align="center">
+  <img src="./docs/menuSearchSort.png" alt="搜尋排序功能示意圖"/>
+</div>
+圖 5.2: 搜尋排序功能示意圖
+提供關鍵字搜尋還有排序功能，圖5.2為搜尋"烤雞"關鍵字和價錢降冪排序。
+
+<div align="center">
+  <img src="./docs/menuDetail.png" alt="商品細節頁面"/>
+</div>
+圖 5.3: 商品細節頁面
+當點擊商品卡片，可以了解更多商品詳情。
+
+
+
+## 5.3 帳戶驗證 
+
+## 5.4 會員管理
+
+## 5.5 線上購物
