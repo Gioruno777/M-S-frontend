@@ -209,7 +209,7 @@
 會員不小心忘記密碼，可透過電子信箱驗證重設密碼。如圖5.9所示，當輸入電子郵件後，系統會提示信件已寄出。
 
 <div align="center">
-  <img src="./docs/forgetPassword.png" alt="收信畫面"/>
+  <img src="./docs/email.png" alt="收信畫面"/>
 </div>
 圖 5.10:收信示意圖
 
@@ -229,8 +229,62 @@
 
 但是如果會員沒在限制時間內完成重設密碼的操作，或是重設成功後又訪問該連結，系統會顯示操作逾時(圖5.12)。
 
-
-
 ## 5.4 會員管理
+<div align="center">
+  <img src="./docs/memberMain.png" alt="會員主頁頁面"/>
+</div>
+圖 5.13：會員主頁頁面
+
+登入成功後，即可開始使用會員服務。如圖5.13所示，會員主頁有一張會員卡，會員卡下方可查看餘額、前往交易明細頁面和儲值會員卡。
+
+<div align="center">
+  <img src="./docs/stripe.png" alt="stripe付款頁面"/>
+</div>
+圖 5.14：Stripe付款頁面
+
+會員確認儲值金額後便會導向Stripe付款頁面，如果會員這時候離開Stripe付款頁面，系統會提示儲值取消返回會員主頁頁面。
+
+<div align="center">
+  <img src="./docs/trans.png" alt="交易明細頁面"/>
+</div>
+圖 5.15：交易明細頁面
+
+如圖5.15所示，交易紀錄頁面會記錄所有關於會員卡的交易，這時候前往交易紀錄頁面可以看到有一筆待付款記錄，正是先前未付款的儲值交易。
+
+<div align="center">
+  <img src="./docs/transDp.png" alt="交易明細待付款範例"/>
+</div>
+圖5.16：交易明細詳待付款範例
+
+在交易紀錄頁面(圖5.15)點擊交易編號25ad0e後可進一步查看交易詳情(圖5.16)，然後點擊付款連結就可以進入到Stripe付款頁面(圖5.14)
+
+<div align="center">
+  <img src="./docs/transDp.png" alt="交易明細詳情成功範例"/>
+</div>
+圖5.17：交易明細詳情成功範例
+
+在Stripe付款頁面(圖5.14)成功後，會導向交易明細詳情頁面，並顯示成功(圖5.17)!
+
+<div align="center">
+  <img src="./docs/transDf.png" alt="交易紀錄頁面"/>
+</div>
+圖5.18：交易記錄狀態失敗範例
+
+然而，如果會員沒在Stripe付款連結時效內付款，則會顯示在該筆交易顯示狀態失敗。
+
+<div align="center">
+  <img src="./docs/purchase.png" alt="交易紀錄頁面"/>
+</div>
+圖5.19：歷史訂單頁面
+<div align="center">
+  <img src="./docs/updatepwd.png" alt="交易紀錄頁面"/>
+</div>
+圖5.20：更新密碼頁面
+<div align="center">
+  <img src="./docs/updateperson.png" alt="交易紀錄頁面"/>
+</div>
+圖5.21：更新會頁資訊頁面
+
+在會員管理模組，除儲值功能，也還提供查看歷史訂單(圖5.19)、更新密碼(圖5.20)和更新會員資訊(圖5.21)。
 
 ## 5.5 線上購物
