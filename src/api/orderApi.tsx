@@ -134,7 +134,7 @@ export const useUpdateCartItemQty = () => {
     } = useMutation({
         mutationFn: request,
         onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ["fetchCartItem"] })
+            await queryClient.invalidateQueries({ queryKey: ["getCartItem"] })
         }
     })
 

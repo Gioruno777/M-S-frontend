@@ -6,19 +6,21 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import Loading from '@/components/Loading'
+import { useMemo } from 'react'
 
 const CartPage = () => {
 
     const title = { icon: faShoppingCart, label: " 線上訂餐" }
     const { items, isLoading } = useGetCartItem()
 
-    let total = 0
-    if (items) {
-        total = items.reduce((total: number, item: ItemType) => {
+    const total = useMemo(() => {
+        if (!items) return 0
+
+        return items.reduce((total: number, item: ItemType) => {
             return total + item.price * item.quantity
         }, 0)
-    }
-    console.log(items)
+    }, [items])
+
     return (
         <OrderContainer title={title}>
             {isLoading ?
