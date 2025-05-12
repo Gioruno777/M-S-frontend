@@ -1,3 +1,4 @@
+import { useGetStock } from "@/api/stockApi"
 import { useAuthContext } from "@/context/AuthContext"
 import AddToCartForm from "@/form/orderforms/AddToCartForm"
 import { foodType } from "@/types"
@@ -10,7 +11,7 @@ type Props = {
 const FoodCard = (food: Props) => {
     const { _id, image, name, price, seasonal, limited, category } = food.food
     const { isLoggedIn } = useAuthContext()
-
+    const { stock, isLoading } = useGetStock(_id)
     return (
         <div className="w-full h-full flex flex-col bg-gray-100 rounded-md shadow-lg  overflow-hidden">
             {!isLoggedIn ?
@@ -55,7 +56,19 @@ const FoodCard = (food: Props) => {
                     </div>
 
                     <h3 className="min-h-12 text-gray-800 md:text-lg md:min-h-0 md:mb-2 ">{name}</h3>
-                    <h3 className="mb-2 text-lg font-semibold text-yellow-600">$ {price}</h3>
+                    <div className="flex flex justify-between mb-2 text-lg font-semibold">
+                        <h3 className="text-yellow-600">$ {price}</h3>
+
+                        {isLoading ?
+                            < h3 className="text-red-600">
+                                庫存: Loading
+                            </h3>
+                            :
+                            < h3 className="text-red-600">
+                                庫存:{stock.stock}
+                            </h3>
+                        }
+                    </div>
 
                     <AddToCartForm productId={_id} />
                 </div>

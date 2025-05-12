@@ -80,7 +80,7 @@ const TransactionDetailPage = () => {
                                     {transaction.status === "FAILED" &&
                                         <>
                                             <RedLink
-                                                to={"/member/transcaion"}
+                                                to={"/member/transaction"}
                                                 width="w-full"
                                             >
                                                 返回

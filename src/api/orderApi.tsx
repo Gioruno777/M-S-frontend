@@ -189,12 +189,13 @@ export const useCheckOut = () => {
             },
             body: JSON.stringify(formData)
         })
+        const data = await response.json()
 
         if (!response.ok) {
-            throw new Error("付款失敗")
+            throw new Error(data.message)
         }
 
-        return response.json()
+        return data
     }
 
     const {
@@ -209,6 +210,13 @@ export const useCheckOut = () => {
             else {
                 alert("付款成功")
                 navigate(`/member/purchase/${data.transaction}`, { replace: true })
+            }
+        },
+        onError: (error) => {
+            console.log(error)
+            if (error.message.includes("庫存不足")) {
+                alert(error.message)
+                navigate(`/menu/main`, { replace: true })
             }
         }
     })
